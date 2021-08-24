@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.json.JSONException;
@@ -224,6 +225,40 @@ public class Weather implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Locale currentLocale=Locale.getDefault();
+        if (!cityName.getText().equals("City Name")) {
+            citySet=cityName.getText();
+            cityName.setText(citySet);
+            cityName.setDisable(true);
+            set.setVisible(false);
+            cancel.setVisible(false);
+            errors.setText("");
+            weatherMenager = new WeatherMenager(citySet);
+            weatherTool = new WeatherTool(citySet);
 
+            try {
+                showWeather();
+                showForecast();
+            } catch (Exception e) {
+                city.setText("Error! - No Internet");
+                city.setTextFill(Color.RED);
+                showToast("Internet Down. Please Connect");
+                reset();
+                change.setDisable(true);
+                cityName.setText("");
+            }
+
+            cityName.setOnKeyPressed(e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    setPressed();
+                }
+            });
+
+        }else{
+            weatherTool = new WeatherTool(citySet);
+            set.setVisible(false);
+            cancel.setVisible(false);
+            cityName.setDisable(true);
+        }
     }
 }
