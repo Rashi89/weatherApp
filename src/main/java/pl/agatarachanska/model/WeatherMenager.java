@@ -115,4 +115,36 @@ public class WeatherMenager {
         }
         return "";
     }
+    public String getCity() {
+        return city;
+    }
+    public String getDay(){
+        return day;
+    }
+
+    public Integer getTemperature() {
+        return temperatura;
+    }
+
+    public String getIcon(){
+        return icon;
+    }
+
+    public String getDescription(){
+        return opis;
+    }
+
+    public String getWindSpeed(){
+        return predkoscWiatru;
+    }
+
+    public String getCloud(){
+        return zachmurzenie;
+    }
+    public String getPressure(){
+        return cisnienie;
+    }
+    public String getHumidity(){
+        return wilgotnosc;
+    }
 }
