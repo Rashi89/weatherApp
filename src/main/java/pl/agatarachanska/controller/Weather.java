@@ -12,10 +12,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.json.JSONException;
+import pl.agatarachanska.model.ImagesTool;
 import pl.agatarachanska.model.WeatherMenager;
 import pl.agatarachanska.model.WeatherTool;
 
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Weather implements Initializable {
@@ -90,6 +92,7 @@ public class Weather implements Initializable {
         temperature.setText(weatherMenager.getTemperature().toString() + "°C");
         day.setText(weatherMenager.getDay().toUpperCase());
         desc.setText(weatherMenager.getDescription().toUpperCase());
+        img.setImage(new Image(ImagesTool.getImage(weatherMenager.getIcon())));
         pressure.setText(weatherMenager.getPressure() + " hPa");
 
     }
@@ -135,6 +138,88 @@ public class Weather implements Initializable {
                 fadeOut.play();
             });
         });
+    }
+
+    @FXML
+    void yourLocationButton() {
+        String dateFromApi = weatherTool.coordinateWeather();
+        weatherTool.downloadDataWeather(dateFromApi);
+
+        String dzisiejszyDzien = weatherTool.getTodayDay();
+
+        Locale currentLocale=Locale.getDefault();
+        setDayName(dzisiejszyDzien,currentLocale.getDisplayLanguage());
+
+
+        temperature1.setText(weatherTool.getTempToday()+ "°C");
+        desc1.setText(weatherTool.getDescriptionToday().toUpperCase());
+        pressure1.setText(weatherTool.getPressureToday()+" hPa");
+        city1.setText(weatherTool.getCity().toUpperCase());
+
+        tomorrow1.setText(weatherTool.getTomorrow());
+        dayAfter1.setText(weatherTool.getDayAfter());
+        dayDayAfter1.setText(weatherTool.getDayDayAfter());
+        dayDayDayAfter1.setText(weatherTool.getDayDayDayAfter());
+
+        img5.setImage(new Image("/images/"+weatherTool.getIcon0()+".png"));
+        img6.setImage(new Image("/images/"+weatherTool.getIconA()+".png"));
+        img7.setImage(new Image("/images/"+weatherTool.getIconB()+".png"));
+        img8.setImage(new Image("/images/"+weatherTool.getIconC()+".png"));
+        img9.setImage(new Image("/images/"+weatherTool.getIconD()+".png"));
+
+
+    }
+
+    public void setDayName(String dzisiejszyDzien, String jezyk){
+        if(jezyk.equals("polski")){
+            switch (dzisiejszyDzien){
+                case "Mon":
+                    day1.setText("PONIEDZIAŁEK");
+                    break;
+                case "Tue":
+                    day1.setText("WTOREK");
+                    break;
+                case "Wed":
+                    day1.setText("ŚRODA");
+                    break;
+                case "Thu":
+                    day1.setText("CZWARTEK");
+                    break;
+                case "Fri":
+                    day1.setText("PIĄTEK");
+                    break;
+                case "Sat":
+                    day1.setText("SOBOTA");
+                    break;
+                case "Sun":
+                    day1.setText("NIEDZIELE");
+                    break;
+            }
+        }else{
+            switch (dzisiejszyDzien){
+                case "Mon":
+                    day1.setText("MONDAY");
+                    break;
+                case "Tue":
+                    day1.setText("TUESDAY");
+                    break;
+                case "Wed":
+                    day1.setText("WEDNESDAY");
+                    break;
+                case "Thu":
+                    day1.setText("THURSDAY");
+                    break;
+                case "Fri":
+                    day1.setText("FRIDAY");
+                    break;
+                case "Sat":
+                    day1.setText("SATURDAY");
+                    break;
+                case "Sun":
+                    day1.setText("SUNDAY");
+                    break;
+            }
+        }
     }
 
     @Override
