@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 /**
  * JavaFX App
@@ -17,9 +18,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"));
-        stage.setScene(scene);
-        stage.show();
+//        scene = new Scene(loadFXML("primary"));
+//        stage.setScene(scene);
+//        stage.show();
     }
 
     static void setRoot(String fxml) throws IOException {
