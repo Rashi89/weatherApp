@@ -270,8 +270,49 @@ public class WeatherTool {
             this.iconD = forecasts.get(fetchDataFromArray3).symbol;
 
         }
-
-
+    }
+    public String getCity(){
+        return city;
+    }
+    public String getIcon0() {
+        return icon0;
     }
 
+    public String getIconA() { return iconA; }
+
+    public String getIconB() {
+        return iconB;
+    }
+
+    public String getIconC() {
+        return iconC;
+    }
+
+    public String getIconD() {
+        return iconD;
+    }
+    public String getTodayDay(){
+        return todayDay;
+    }
+    public String getDescriptionToday(){
+        return descriptionToday;
+    }
+    public String getTempToday(){
+        return tempToday;
+    }
+    public String getPressureToday(){
+        return pressureToday;
+    }
+    public String getTomorrow(){
+        return tomorrow;
+    }
+    public String getDayAfter(){
+        return dayAfter;
+    }
+    public String getDayDayAfter(){
+        return dayDayAfter;
+    }
+    public String getDayDayDayAfter(){
+        return dayDayDayAfter;
+    }
 }
