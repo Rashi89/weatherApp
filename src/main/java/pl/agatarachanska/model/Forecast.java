@@ -9,11 +9,11 @@ public class Forecast {
     public String pressure;
     public Date time;
 
-    public Forecast(String temp, String sym, String descript, Date clock, String press){
+    public Forecast(String temp, String symbols, String descript, Date clock, String pressures){
         temperatura=temp;
-        symbol = sym;
+        symbol = symbols;
         description = descript;
         time= clock;
-        pressure = press;
+        pressure = pressures;
     }
 }
