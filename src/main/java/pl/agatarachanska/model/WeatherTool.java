@@ -1,5 +1,8 @@
 package pl.agatarachanska.model;
 
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -61,9 +64,51 @@ public class WeatherTool {
     public void fetchLocalApi(){
         try{
             local = new URL("http://ip-api.com/xml").openConnection().getInputStream();
-            System.out.println("local1 "+local);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    private void downloadDataFromApi(){
+        XMLInputFactory inputFactory =
+                XMLInputFactory.newInstance();
+        fetchLocalApi();
+        try{
+            XMLStreamReader reader =
+                    inputFactory.createXMLStreamReader(local);
+            reader.next();
+
+            while (reader.hasNext()) {
+                int eventType = reader.getEventType();
+                if (eventType == XMLStreamReader.START_ELEMENT) {
+                    String el = reader.getLocalName();
+
+                    if (el.equals("city")) {
+                        city = reader.getElementText();
+                    }
+
+                    if (el.equals("lat")) {
+                        latitude = reader.getElementText();
+                    }
+
+                    if (el.equals("lon")) {
+                        longitude = reader.getElementText();
+                    }
+                }
+                reader.next();
+            }
+            reader.close();
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public String coordinateWeather(){
+        downloadDataFromApi();
+        return "http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude +
+                "&units=metric&mode=xml&lang="+language+"&appid=a539a1d5b32e2518dfe9ca8abf12434c";
+    }
+
 }
