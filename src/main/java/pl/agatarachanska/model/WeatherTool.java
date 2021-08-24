@@ -6,6 +6,8 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -109,6 +111,14 @@ public class WeatherTool {
         downloadDataFromApi();
         return "http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude +
                 "&units=metric&mode=xml&lang="+language+"&appid=a539a1d5b32e2518dfe9ca8abf12434c";
+    }
+
+    public String cityWeather(){
+        String town = city.toString();
+        String api = "http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(town, StandardCharsets.UTF_8) +
+                "&units=metric&mode=xml&lang="+language+"&appid=a539a1d5b32e2518dfe9ca8abf12434c";
+        downloadDataFromApi();
+        return api;
     }
 
 }
