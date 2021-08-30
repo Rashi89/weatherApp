@@ -72,11 +72,11 @@
                             <children>
                                 <GridPane alignment="CENTER" prefHeight="88.0" prefWidth="496.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="4.0">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.19998168945312" minWidth="10.0" prefWidth="34.199981689453125" />
-                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="140.60001220703126" minWidth="15.0" prefWidth="135.0" />
-                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="241.00003662109373" minWidth="10.0" prefWidth="152.20004882812498" />
-                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="139.2" minWidth="10.0" prefWidth="138.399951171875" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="44.79996337890623" minWidth="6.399999999999977" prefWidth="29.599951171874977" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.19998168945312" minWidth="10.0" prefWidth="29.600006103515625" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="157.2" minWidth="15.0" prefWidth="142.99999389648437" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="241.00003662109373" minWidth="10.0" prefWidth="161.6" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.40001220703124" minWidth="10.0" prefWidth="142.59999999999997" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="44.79996337890623" minWidth="6.399999999999977" prefWidth="16.0" />
                                     </columnConstraints>
                                     <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -89,23 +89,23 @@
                                                 <Font name="Lato Black" size="15.0" />
                                             </font>
                                         </TextField>
-                                        <Button fx:id="change" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicks" prefHeight="35.0" prefWidth="124.0" styleClass="changebtn" text="%zmien" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                        <Button fx:id="change" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicks" prefHeight="35.0" prefWidth="145.0" styleClass="changebtn" text="%zmien" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                             <font>
-                                                <Font name="Lato Black" size="12.0" />
+                                                <Font name="Lato Black" size="14.0" />
                                             </font>
                                             <effect>
                                                 <DropShadow />
                                             </effect></Button>
-                                        <Button fx:id="set" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicks" prefHeight="35.0" prefWidth="124.0" styleClass="setbtn" text="%ustaw" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <Button fx:id="set" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicks" prefHeight="35.0" prefWidth="145.0" styleClass="setbtn" text="%ustaw" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                             <font>
-                                                <Font name="Lato Black" size="12.0" />
+                                                <Font name="Lato Black" size="14.0" />
                                             </font>
                                             <effect>
                                                 <DropShadow />
                                             </effect></Button>
-                                        <Button fx:id="cancel" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicks" prefHeight="35.0" prefWidth="124.0" styleClass="cancelbtn" text="%anuluj" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                        <Button fx:id="cancel" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicks" prefHeight="35.0" prefWidth="145.0" styleClass="cancelbtn" text="%anuluj" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                             <font>
-                                                <Font name="Lato Black" size="12.0" />
+                                                <Font name="Lato Black" size="14.0" />
                                             </font>
                                             <effect>
                                                 <DropShadow />
@@ -316,16 +316,16 @@
                                 <GridPane layoutY="13.0" prefHeight="35.0" prefWidth="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
                                     </columnConstraints>
                                     <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Button mnemonicParsing="false" onAction="#yourLocationButton" prefHeight="34.0" prefWidth="124.0" styleClass="localbtn" text="%localization" GridPane.columnIndex="1">
+                                        <Button mnemonicParsing="false" onAction="#yourLocationButton" prefHeight="34.0" prefWidth="145.0" styleClass="localbtn" text="%localization" GridPane.columnIndex="1">
                                             <font>
-                                                <Font name="Lato Black" size="12.0" />
+                                                <Font name="Lato Black" size="14.0" />
                                             </font>
                                             <effect>
                                                 <DropShadow />

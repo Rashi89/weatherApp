@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -31,6 +32,7 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
+//                Locale.setDefault(new Locale("en"));
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         ResourceBundle bundle = ResourceBundle.getBundle("bundles.message");
         fxmlLoader.setResources(bundle);
