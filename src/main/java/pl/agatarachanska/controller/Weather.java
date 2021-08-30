@@ -18,6 +18,8 @@ import pl.agatarachanska.model.WeatherMenager;
 import pl.agatarachanska.model.WeatherTool;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -26,10 +28,13 @@ public class Weather implements Initializable {
     private WeatherMenager weatherMenager;
     private WeatherTool weatherTool;
     public String citySet;
+    private Date datas;
 
     @FXML
-    private Label city,city1,day,day1,temperature,temperature1,pressure,pressure1,tomorrow,tomorrow1,dayAfter,
-            dayAfter1,dayDayAfter,dayDayAfter1,dayDayDayAfter,dayDayDayAfter1,desc,desc1,errors;
+    private Label city,city1,day,temperature,temperature1,pressure,pressure1,tomorrow,tomorrow1,dayAfter,
+            dayAfter1,dayDayAfter,dayDayAfter1,dayDayDayAfter,dayDayDayAfter1,desc,desc1,errors,tomorrowDescription,
+            dayAfterDescription,dayDayAfterDescription,dayDayDayAfterDescription,tomorrowDescription1,
+            dayAfterDescription1,dayDayAfterDescription1,dayDayDayAfterDescription1;
 
     @FXML
     private ImageView img,img1,img2,img3,img4,img5,img6,img7,img8,img9;
@@ -73,7 +78,7 @@ public class Weather implements Initializable {
                 cityName.setText((citySet.trim()).toUpperCase());
                 weatherTool = new WeatherTool(citySet);
                 weatherMenager = new WeatherMenager(citySet);
-                city.setTextFill(Color.web("black"));
+//                city.setTextFill(Color.web("black"));
                 showWeather();
                 showForecast();
                 bottomSet(false);
@@ -91,7 +96,7 @@ public class Weather implements Initializable {
         weatherMenager.fetchDataWeather();
         city.setText(weatherMenager.getCity().toUpperCase());
         temperature.setText(weatherMenager.getTemperature().toString() + "°C");
-        day.setText(weatherMenager.getDay().toUpperCase());
+//        day.setText(weatherMenager.getDay().toUpperCase());
         desc.setText(weatherMenager.getDescription().toUpperCase());
         img.setImage(new Image(ImagesTool.getImage(weatherMenager.getIcon())));
         pressure.setText(weatherMenager.getPressure() + " hPa");
@@ -102,9 +107,13 @@ public class Weather implements Initializable {
         String weatherApi = weatherTool.cityWeather();
         weatherTool.downloadDataWeather(weatherApi);
         tomorrow.setText(weatherTool.getTomorrow());
+        tomorrowDescription.setText(weatherTool.getTomorrowDescription());
         dayAfter.setText(weatherTool.getDayAfter());
+        dayAfterDescription.setText(weatherTool.getDayAfterDescription());
         dayDayAfter.setText(weatherTool.getDayDayAfter());
+        dayDayAfterDescription.setText(weatherTool.getDayDayAfterDescription());
         dayDayDayAfter.setText((weatherTool.getDayDayDayAfter()));
+        dayDayDayAfterDescription.setText(weatherTool.getDayDayDayAfterDescription());
 
         img1.setImage(new Image("/images/" + weatherTool.getIconA() + ".png"));
         img2.setImage(new Image("/images/" + weatherTool.getIconB() + ".png"));
@@ -146,21 +155,19 @@ public class Weather implements Initializable {
         String dateFromApi = weatherTool.coordinateWeather();
         weatherTool.downloadDataWeather(dateFromApi);
 
-        String dzisiejszyDzien = weatherTool.getTodayDay();
-
-        Locale currentLocale=Locale.getDefault();
-        setDayName(dzisiejszyDzien,currentLocale.getDisplayLanguage());
-
-
         temperature1.setText(weatherTool.getTempToday()+ "°C");
         desc1.setText(weatherTool.getDescriptionToday().toUpperCase());
         pressure1.setText(weatherTool.getPressureToday()+" hPa");
         city1.setText(weatherTool.getCity().toUpperCase());
 
         tomorrow1.setText(weatherTool.getTomorrow());
+        tomorrowDescription1.setText(weatherTool.getTomorrowDescription());
         dayAfter1.setText(weatherTool.getDayAfter());
+        dayAfterDescription1.setText(weatherTool.getDayAfterDescription());
         dayDayAfter1.setText(weatherTool.getDayDayAfter());
+        dayDayAfterDescription1.setText(weatherTool.getDayDayAfterDescription());
         dayDayDayAfter1.setText(weatherTool.getDayDayDayAfter());
+        dayDayDayAfterDescription1.setText(weatherTool.getDayDayDayAfterDescription());
 
         img5.setImage(new Image("/images/"+weatherTool.getIcon0()+".png"));
         img6.setImage(new Image("/images/"+weatherTool.getIconA()+".png"));
@@ -171,61 +178,67 @@ public class Weather implements Initializable {
 
     }
 
-    public void setDayName(String dzisiejszyDzien, String jezyk){
-        if(jezyk.equals("polski")){
-            switch (dzisiejszyDzien){
+    public String setDayNames(String dzisiejszyDzien, String jezyk) {
+        datas = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        if (jezyk.equals("polski")) {
+            switch (dzisiejszyDzien) {
                 case "Mon":
-                    day1.setText("PONIEDZIAŁEK");
-                    break;
+                    return "PONIEDZIAŁEK " + formatter.format(datas);
+
                 case "Tue":
-                    day1.setText("WTOREK");
-                    break;
+                    return "WTOREK " + formatter.format(datas);
+
                 case "Wed":
-                    day1.setText("ŚRODA");
-                    break;
+                    return "ŚRODA " + formatter.format(datas);
+
                 case "Thu":
-                    day1.setText("CZWARTEK");
-                    break;
+                    return "CZWARTEK " + formatter.format(datas);
                 case "Fri":
-                    day1.setText("PIĄTEK");
-                    break;
+                    return "PIĄTEK " + formatter.format(datas);
+
                 case "Sat":
-                    day1.setText("SOBOTA");
-                    break;
+                    return "SOBOTA " + formatter.format(datas);
+
                 case "Sun":
-                    day1.setText("NIEDZIELE");
-                    break;
+                    return "NIEDZIELA " + formatter.format(datas);
+
             }
-        }else{
-            switch (dzisiejszyDzien){
+        } else {
+            switch (dzisiejszyDzien) {
                 case "Mon":
-                    day1.setText("MONDAY");
-                    break;
+                    return "MONDAY " + formatter.format(datas);
+
                 case "Tue":
-                    day1.setText("TUESDAY");
-                    break;
+                    return "TUESDAY " + formatter.format(datas);
+
                 case "Wed":
-                    day1.setText("WEDNESDAY");
-                    break;
+                    return "WEDNESDAY " + formatter.format(datas);
+
                 case "Thu":
-                    day1.setText("THURSDAY");
-                    break;
+                    return "THURSDAY " + formatter.format(datas);
+
                 case "Fri":
-                    day1.setText("FRIDAY");
-                    break;
+                    return "FRIDAY " + formatter.format(datas);
+
                 case "Sat":
-                    day1.setText("SATURDAY");
-                    break;
+                    return "SATURDAY " + formatter.format(datas);
+
                 case "Sun":
-                    day1.setText("SUNDAY");
-                    break;
+                    return "SUNDAY " + formatter.format(datas);
+
             }
         }
+        return "brak";
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Locale currentLocale=Locale.getDefault();
+        String nazwa = new SimpleDateFormat("EEE",Locale.ENGLISH).format(new Date());
+        String wyrazenie = setDayNames(nazwa, currentLocale.getDisplayLanguage());
+        day.setText(wyrazenie);
         if (!cityName.getText().equals("City Name")) {
             citySet=cityName.getText();
             cityName.setText(citySet);

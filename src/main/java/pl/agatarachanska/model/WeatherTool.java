@@ -54,6 +54,10 @@ public class WeatherTool {
     public List<Forecast> forecasts = new ArrayList<>();
 
     public String language;
+    private String tomorrowDescription;
+    private String dayAfterDescription;
+    private String dayDayAfterDescription;
+    private String dayDayDayAfterDescription;
 
     public WeatherTool(String city){
         this.city=city;
@@ -247,21 +251,25 @@ public class WeatherTool {
             String descriptionDayDay= forecasts.get(fetchDataFromArray2).description;
             String descriptionDayDayDay =forecasts.get(fetchDataFromArray3).description;
 
-            this.tomorrow = " "+forecasts.get(fetchDataFromArray).time.toString().substring(0,4)+
-                    "    "+tempTomorrow+"ºC      "+forecasts.get(fetchDataFromArray).pressure +" hPa"+
-                    "    "+descriptionTomorrow;
+            this.tomorrow = " "+dayName(forecasts.get(fetchDataFromArray).time.toString().substring(0,4))+
+                    "  "+tempTomorrow+"ºC  "+forecasts.get(fetchDataFromArray).pressure +" hPa";
 
-            this.dayAfter = " "+forecasts.get(fetchDataFromArray1).time.toString().substring(0,4)+
-                    "    "+tempDay+"ºC      "+forecasts.get(fetchDataFromArray1).pressure +" hPa"+
-                    "    "+descriptionDay;
+            this.tomorrowDescription =" "+descriptionTomorrow;
 
-            this.dayDayAfter =" "+forecasts.get(fetchDataFromArray2).time.toString().substring(0,4)+
-                    "    "+tempDayDay+"ºC      "+forecasts.get(fetchDataFromArray2).pressure +" hPa"+
-                    "    "+descriptionDayDay;
+            this.dayAfter = " "+dayName(forecasts.get(fetchDataFromArray1).time.toString().substring(0,4))+
+                    "  "+tempDay+"ºC   "+forecasts.get(fetchDataFromArray1).pressure +" hPa";
 
-            this.dayDayDayAfter =" "+forecasts.get(fetchDataFromArray3).time.toString().substring(0,4)+
-                    "    "+tempDayDayDay+"ºC      "+forecasts.get(fetchDataFromArray3).pressure +" hPa"+
-                    "    "+descriptionDayDayDay;
+            this.dayAfterDescription = " "+descriptionDay;
+
+            this.dayDayAfter =" "+dayName(forecasts.get(fetchDataFromArray2).time.toString().substring(0,4))+
+                    "  "+tempDayDay+"ºC  "+forecasts.get(fetchDataFromArray2).pressure +" hPa";
+
+            this.dayDayAfterDescription =" "+descriptionDayDay;
+
+            this.dayDayDayAfter =" "+dayName(forecasts.get(fetchDataFromArray3).time.toString().substring(0,4))+
+                    "  "+tempDayDayDay+"ºC  "+forecasts.get(fetchDataFromArray3).pressure +" hPa";
+
+            this.dayDayDayAfterDescription = " "+descriptionDayDayDay;
 
             this.icon0 = forecasts.get(0).symbol;
             this.iconA = forecasts.get(fetchDataFromArray).symbol;
@@ -270,6 +278,30 @@ public class WeatherTool {
             this.iconD = forecasts.get(fetchDataFromArray3).symbol;
 
         }
+    }
+    private String dayName(String name) {
+        Locale currentLocale = Locale.getDefault();
+        if (currentLocale.getDisplayLanguage().equals("polski")) {
+            switch (name) {
+                case "Mon ":
+                    return "Pon.";
+                case "Tue ":
+                    return "Wt.";
+                case "Wed ":
+                    return "Śr.";
+                case "Thu ":
+                    return "Czw.";
+                case "Fri ":
+                    return "Pt.";
+                case "Sat ":
+                    return "Sob.";
+                case "Sun ":
+                    return "Niedz.";
+                default:
+                    return "";
+            }
+
+        } else return name;
     }
     public String getCity(){
         return city;
@@ -315,4 +347,8 @@ public class WeatherTool {
     public String getDayDayDayAfter(){
         return dayDayDayAfter;
     }
+    public String getTomorrowDescription(){ return tomorrowDescription;}
+    public String getDayAfterDescription() {return dayAfterDescription; }
+    public String getDayDayAfterDescription() { return dayDayAfterDescription; }
+    public String getDayDayDayAfterDescription() { return dayDayDayAfterDescription; }
 }

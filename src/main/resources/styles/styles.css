@@ -1,0 +1,27 @@
+.box
+{
+-fx-background-image: url("/images/pogoda.jpg");
+-fx-background-size: cover;
+}
+.changebtn,.setbtn,.cancelbtn,.localbtn{
+-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db);
+
+}
+.changebtn:hover,.localbtn:hover{
+-fx-font-family:'Lato Black';
+-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #0987db, #53f5cf);
+-fx-text-fill:white;
+}
+.setbtn:hover{
+-fx-font-family:'Lato Black';
+-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #0987db, #53f5cf);
+-fx-text-fill:white;
+}
+.cancelbtn:hover{
+-fx-font-family:'Lato Black';
+-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #0987db, #53f5cf);
+-fx-text-fill:white;
+}
+.description{
+-fx-text-fill:black;
+}

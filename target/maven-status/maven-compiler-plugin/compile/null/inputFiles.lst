@@ -1,4 +1,7 @@
 D:\Programowanie\projekty_w_java\apkaPogodowa\src\main\java\module-info.java
+D:\Programowanie\projekty_w_java\apkaPogodowa\src\main\java\pl\agatarachanska\model\WeatherTool.java
+D:\Programowanie\projekty_w_java\apkaPogodowa\src\main\java\pl\agatarachanska\model\Forecast.java
+D:\Programowanie\projekty_w_java\apkaPogodowa\src\main\java\pl\agatarachanska\controller\Weather.java
 D:\Programowanie\projekty_w_java\apkaPogodowa\src\main\java\pl\agatarachanska\App.java
-D:\Programowanie\projekty_w_java\apkaPogodowa\src\main\java\pl\agatarachanska\SecondaryController.java
-D:\Programowanie\projekty_w_java\apkaPogodowa\src\main\java\pl\agatarachanska\PrimaryController.java
+D:\Programowanie\projekty_w_java\apkaPogodowa\src\main\java\pl\agatarachanska\model\ImagesTool.java
+D:\Programowanie\projekty_w_java\apkaPogodowa\src\main\java\pl\agatarachanska\model\WeatherMenager.java
