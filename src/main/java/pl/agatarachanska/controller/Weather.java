@@ -166,39 +166,6 @@ public class Weather implements Initializable {
         });
     }
 
-    @FXML
-    void yourLocationButton() {
-        weatherTool.fetchLocalApi();
-        if(weatherTool.getConnectionIsOpen()) {
-            String dateFromApi = weatherTool.coordinateWeather();
-            weatherTool.downloadDataWeather(dateFromApi);
-
-            temperature1.setText(weatherTool.getTempToday() + "°C");
-            desc1.setText(weatherTool.getDescriptionToday().toUpperCase());
-            pressure1.setText(weatherTool.getPressureToday() + " hPa");
-            city1.setText(weatherTool.getCity().toUpperCase());
-
-            tomorrow1.setText(weatherTool.getTomorrow());
-            tomorrowDescription1.setText(weatherTool.getTomorrowDescription());
-            dayAfter1.setText(weatherTool.getDayAfter());
-            dayAfterDescription1.setText(weatherTool.getDayAfterDescription());
-            dayDayAfter1.setText(weatherTool.getDayDayAfter());
-            dayDayAfterDescription1.setText(weatherTool.getDayDayAfterDescription());
-            dayDayDayAfter1.setText(weatherTool.getDayDayDayAfter());
-            dayDayDayAfterDescription1.setText(weatherTool.getDayDayDayAfterDescription());
-
-            img5.setImage(new Image("/images/" + weatherTool.getIcon0() + ".png"));
-            img6.setImage(new Image("/images/" + weatherTool.getIconA() + ".png"));
-            img7.setImage(new Image("/images/" + weatherTool.getIconB() + ".png"));
-            img8.setImage(new Image("/images/" + weatherTool.getIconC() + ".png"));
-            img9.setImage(new Image("/images/" + weatherTool.getIconD() + ".png"));
-        }else{
-            if(language.equals("polski")) {
-                showToast("Brak internetu!!!!");
-            }else showToast("Internet Down. Please Connect");
-        }
-    }
-
     public String setDayNames(String dzisiejszyDzien, String jezyk) {
         datas = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -248,6 +215,37 @@ public class Weather implements Initializable {
         String nameDay = setDayNames(name, currentLocale.getDisplayLanguage());
         day.setText(nameDay);
         this.language=currentLocale.getDisplayLanguage();
+        weatherMenager = new WeatherMenager(citySet);
+        weatherTool = new WeatherTool(citySet);
+        weatherTool.fetchLocalApi();
+        if(weatherTool.getConnectionIsOpen()) {
+            String dateFromApi = weatherTool.coordinateWeather();
+            weatherTool.downloadDataWeather(dateFromApi);
+
+            temperature1.setText(weatherTool.getTempToday() + "°C");
+            desc1.setText(weatherTool.getDescriptionToday().toUpperCase());
+            pressure1.setText(weatherTool.getPressureToday() + " hPa");
+            city1.setText(weatherTool.getCity().toUpperCase());
+
+            tomorrow1.setText(weatherTool.getTomorrow());
+            tomorrowDescription1.setText(weatherTool.getTomorrowDescription());
+            dayAfter1.setText(weatherTool.getDayAfter());
+            dayAfterDescription1.setText(weatherTool.getDayAfterDescription());
+            dayDayAfter1.setText(weatherTool.getDayDayAfter());
+            dayDayAfterDescription1.setText(weatherTool.getDayDayAfterDescription());
+            dayDayDayAfter1.setText(weatherTool.getDayDayDayAfter());
+            dayDayDayAfterDescription1.setText(weatherTool.getDayDayDayAfterDescription());
+
+            img5.setImage(new Image("/images/" + weatherTool.getIcon0() + ".png"));
+            img6.setImage(new Image("/images/" + weatherTool.getIconA() + ".png"));
+            img7.setImage(new Image("/images/" + weatherTool.getIconB() + ".png"));
+            img8.setImage(new Image("/images/" + weatherTool.getIconC() + ".png"));
+            img9.setImage(new Image("/images/" + weatherTool.getIconD() + ".png"));
+        }else{
+            if(language.equals("polski")) {
+                showToast("Brak internetu!!!!");
+            }else showToast("Internet Down. Please Connect");
+        }
         if (!cityName.getText().equals("City Name")&&!cityName.getText().equals("Nazwa miasta")) {
             citySet=cityName.getText();
             cityName.setText(citySet);
@@ -255,8 +253,7 @@ public class Weather implements Initializable {
             set.setVisible(false);
             cancel.setVisible(false);
             errors.setText("");
-            weatherMenager = new WeatherMenager(citySet);
-            weatherTool = new WeatherTool(citySet);
+
             try {
                 showWeather();
                 showForecast();

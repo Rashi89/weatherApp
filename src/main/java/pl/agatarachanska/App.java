@@ -32,7 +32,7 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-//                Locale.setDefault(new Locale("en"));
+                Locale.setDefault(new Locale("en"));
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         ResourceBundle bundle = ResourceBundle.getBundle("bundles.message");
         fxmlLoader.setResources(bundle);
