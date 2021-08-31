@@ -17,6 +17,7 @@ import pl.agatarachanska.model.ImagesTool;
 import pl.agatarachanska.model.WeatherMenager;
 import pl.agatarachanska.model.WeatherTool;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,6 +45,7 @@ public class Weather implements Initializable {
 
     @FXML
     private Button change,set,cancel;
+    private String language;
 
     public Weather(){this.citySet="Cracow".toUpperCase();}
 
@@ -68,27 +70,42 @@ public class Weather implements Initializable {
         change.setVisible(!statement);
         cancel.setVisible(statement);
     }
-    private void setPressed() {
+    private void setPressed(){
         System.out.println(cityName.getText());
+        city.setStyle("-fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db)");
         if (cityName.getText().equals("")) {
-            showToast("City Name cannot be blank");
+            if(language.equals("polski")){
+                showToast("Nazwa miasta nie może być pusta!");
+            }else showToast("City Name cannot be blank");
         } else {
             try {
+                city.setStyle("-fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db)");
                 this.citySet = cityName.getText().trim();
                 cityName.setText((citySet.trim()).toUpperCase());
                 weatherTool = new WeatherTool(citySet);
                 weatherMenager = new WeatherMenager(citySet);
-//                city.setTextFill(Color.web("black"));
-                showWeather();
-                showForecast();
-                bottomSet(false);
-
+                weatherTool.fetchLocalApi();
+                if(!weatherTool.getConnectionIsOpen()){
+                    city.setText("Error!");
+                    city.setStyle("-fx-text-fill:red;");
+                    if(language.equals("polski")){
+                        showToast("Brak Internetu!");
+                    }else { showToast("Internet Down. Please Connect "); }
+                    reset();
+                }else {
+                    showWeather();
+                    showForecast();
+                    bottomSet(false);
+                }
             } catch (Exception e) {
                 city.setText("Error!");
-                city.setTextFill(Color.RED);
-                showToast("City with the given name was not found.");
+                city.setStyle("-fx-text-fill:red;");
+                if(language.equals("polski")){
+                    showToast("Nie znaleziono prognozy dla wybranego miasta");
+                }else {
+                    showToast("City with the given name was not found.");
+                }
                 reset();
-
             }
         }
     }
@@ -122,7 +139,6 @@ public class Weather implements Initializable {
     }
     public void reset() {
         bottomSet(false);
-        day.setText("");
         temperature.setText("");
         desc.setText("");
         pressure.setText("");
@@ -131,7 +147,7 @@ public class Weather implements Initializable {
     private void showToast(String message) {
         errors.setText(message);
         errors.setTextFill(Color.RED);
-        errors.setStyle("-fx-background-color: #fff; -fx-background-radius: 50px;");
+        errors.setStyle("-fx-font-weight:bold;");
 
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), errors);
         fadeIn.setToValue(1);
@@ -152,30 +168,35 @@ public class Weather implements Initializable {
 
     @FXML
     void yourLocationButton() {
-        String dateFromApi = weatherTool.coordinateWeather();
-        weatherTool.downloadDataWeather(dateFromApi);
+        weatherTool.fetchLocalApi();
+        if(weatherTool.getConnectionIsOpen()) {
+            String dateFromApi = weatherTool.coordinateWeather();
+            weatherTool.downloadDataWeather(dateFromApi);
 
-        temperature1.setText(weatherTool.getTempToday()+ "°C");
-        desc1.setText(weatherTool.getDescriptionToday().toUpperCase());
-        pressure1.setText(weatherTool.getPressureToday()+" hPa");
-        city1.setText(weatherTool.getCity().toUpperCase());
+            temperature1.setText(weatherTool.getTempToday() + "°C");
+            desc1.setText(weatherTool.getDescriptionToday().toUpperCase());
+            pressure1.setText(weatherTool.getPressureToday() + " hPa");
+            city1.setText(weatherTool.getCity().toUpperCase());
 
-        tomorrow1.setText(weatherTool.getTomorrow());
-        tomorrowDescription1.setText(weatherTool.getTomorrowDescription());
-        dayAfter1.setText(weatherTool.getDayAfter());
-        dayAfterDescription1.setText(weatherTool.getDayAfterDescription());
-        dayDayAfter1.setText(weatherTool.getDayDayAfter());
-        dayDayAfterDescription1.setText(weatherTool.getDayDayAfterDescription());
-        dayDayDayAfter1.setText(weatherTool.getDayDayDayAfter());
-        dayDayDayAfterDescription1.setText(weatherTool.getDayDayDayAfterDescription());
+            tomorrow1.setText(weatherTool.getTomorrow());
+            tomorrowDescription1.setText(weatherTool.getTomorrowDescription());
+            dayAfter1.setText(weatherTool.getDayAfter());
+            dayAfterDescription1.setText(weatherTool.getDayAfterDescription());
+            dayDayAfter1.setText(weatherTool.getDayDayAfter());
+            dayDayAfterDescription1.setText(weatherTool.getDayDayAfterDescription());
+            dayDayDayAfter1.setText(weatherTool.getDayDayDayAfter());
+            dayDayDayAfterDescription1.setText(weatherTool.getDayDayDayAfterDescription());
 
-        img5.setImage(new Image("/images/"+weatherTool.getIcon0()+".png"));
-        img6.setImage(new Image("/images/"+weatherTool.getIconA()+".png"));
-        img7.setImage(new Image("/images/"+weatherTool.getIconB()+".png"));
-        img8.setImage(new Image("/images/"+weatherTool.getIconC()+".png"));
-        img9.setImage(new Image("/images/"+weatherTool.getIconD()+".png"));
-
-
+            img5.setImage(new Image("/images/" + weatherTool.getIcon0() + ".png"));
+            img6.setImage(new Image("/images/" + weatherTool.getIconA() + ".png"));
+            img7.setImage(new Image("/images/" + weatherTool.getIconB() + ".png"));
+            img8.setImage(new Image("/images/" + weatherTool.getIconC() + ".png"));
+            img9.setImage(new Image("/images/" + weatherTool.getIconD() + ".png"));
+        }else{
+            if(language.equals("polski")) {
+                showToast("Brak internetu!!!!");
+            }else showToast("Internet Down. Please Connect");
+        }
     }
 
     public String setDayNames(String dzisiejszyDzien, String jezyk) {
@@ -185,48 +206,35 @@ public class Weather implements Initializable {
             switch (dzisiejszyDzien) {
                 case "Mon":
                     return "PONIEDZIAŁEK " + formatter.format(datas);
-
                 case "Tue":
                     return "WTOREK " + formatter.format(datas);
-
                 case "Wed":
                     return "ŚRODA " + formatter.format(datas);
-
                 case "Thu":
                     return "CZWARTEK " + formatter.format(datas);
                 case "Fri":
                     return "PIĄTEK " + formatter.format(datas);
-
                 case "Sat":
                     return "SOBOTA " + formatter.format(datas);
-
                 case "Sun":
                     return "NIEDZIELA " + formatter.format(datas);
-
             }
         } else {
             switch (dzisiejszyDzien) {
                 case "Mon":
                     return "MONDAY " + formatter.format(datas);
-
                 case "Tue":
                     return "TUESDAY " + formatter.format(datas);
-
                 case "Wed":
                     return "WEDNESDAY " + formatter.format(datas);
-
                 case "Thu":
                     return "THURSDAY " + formatter.format(datas);
-
                 case "Fri":
                     return "FRIDAY " + formatter.format(datas);
-
                 case "Sat":
                     return "SATURDAY " + formatter.format(datas);
-
                 case "Sun":
                     return "SUNDAY " + formatter.format(datas);
-
             }
         }
         return "brak";
@@ -236,10 +244,11 @@ public class Weather implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Locale currentLocale=Locale.getDefault();
-        String nazwa = new SimpleDateFormat("EEE",Locale.ENGLISH).format(new Date());
-        String wyrazenie = setDayNames(nazwa, currentLocale.getDisplayLanguage());
-        day.setText(wyrazenie);
-        if (!cityName.getText().equals("City Name")) {
+        String name = new SimpleDateFormat("EEE",Locale.ENGLISH).format(new Date());
+        String nameDay = setDayNames(name, currentLocale.getDisplayLanguage());
+        day.setText(nameDay);
+        this.language=currentLocale.getDisplayLanguage();
+        if (!cityName.getText().equals("City Name")&&!cityName.getText().equals("Nazwa miasta")) {
             citySet=cityName.getText();
             cityName.setText(citySet);
             cityName.setDisable(true);
@@ -248,14 +257,19 @@ public class Weather implements Initializable {
             errors.setText("");
             weatherMenager = new WeatherMenager(citySet);
             weatherTool = new WeatherTool(citySet);
-
             try {
                 showWeather();
                 showForecast();
             } catch (Exception e) {
-                city.setText("Error! - No Internet");
-                city.setTextFill(Color.RED);
-                showToast("Internet Down. Please Connect");
+                city.setStyle("-fx-text-fill:red;");
+                if(currentLocale.getDisplayLanguage().equals("polski")){
+                    city.setText("Error! - Brak Internetu");
+                    showToast("Brak Internetu. Połącz sie ponownie!");
+                }else {
+                    city.setText("Error! - No Internet");
+                    city.setTextFill(Color.RED);
+                    showToast("Internet Down. Please Connect");
+                }
                 reset();
                 change.setDisable(true);
                 cityName.setText("");

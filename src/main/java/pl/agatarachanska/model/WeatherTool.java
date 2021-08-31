@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,6 +59,7 @@ public class WeatherTool {
     private String dayAfterDescription;
     private String dayDayAfterDescription;
     private String dayDayDayAfterDescription;
+    private boolean connectionIsOpen;
 
     public WeatherTool(String city){
         this.city=city;
@@ -70,6 +72,10 @@ public class WeatherTool {
     public void fetchLocalApi(){
         try{
             local = new URL("http://ip-api.com/xml").openConnection().getInputStream();
+            System.out.println("local1 "+local);
+            this.connectionIsOpen=true;
+        }catch(UnknownHostException | MalformedURLException e){
+            this.connectionIsOpen=false;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -351,4 +357,5 @@ public class WeatherTool {
     public String getDayAfterDescription() {return dayAfterDescription; }
     public String getDayDayAfterDescription() { return dayDayAfterDescription; }
     public String getDayDayDayAfterDescription() { return dayDayDayAfterDescription; }
+    public boolean getConnectionIsOpen(){return connectionIsOpen;}
 }
