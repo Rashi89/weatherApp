@@ -50,18 +50,18 @@
                                         </DropShadow>
                                     </effect>
                                 </AnchorPane>
-                                <Label fx:id="desc" alignment="CENTER" layoutX="115.0" layoutY="26.0" prefHeight="27.0" prefWidth="253.0" style="-fx-text-fill: black;" text="description" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="134.0">
+                                <Label fx:id="desc" alignment="CENTER" layoutX="115.0" layoutY="26.0" prefHeight="27.0" prefWidth="253.0" style="-fx-text-fill: black;" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="134.0">
                                     <font>
                                         <Font name="Lato Black" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="temperature" alignment="CENTER" layoutX="47.0" layoutY="32.0" prefHeight="46.0" prefWidth="80.0" style="-fx-text-fill: black;" text="Temperature" AnchorPane.leftAnchor="47.0">
+                                <Label fx:id="temperature" alignment="CENTER" layoutX="47.0" layoutY="32.0" prefHeight="46.0" prefWidth="80.0" style="-fx-text-fill: black;" AnchorPane.leftAnchor="47.0">
                                     <font>
                                         <Font name="Lato Black" size="18.0" />
                                     </font>
                                 </Label>
                                 <ImageView fx:id="img" fitHeight="80.0" fitWidth="80.0" layoutX="383.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                <Label fx:id="pressure" alignment="CENTER" layoutX="165.0" layoutY="55.0" prefHeight="27.0" prefWidth="159.0" style="-fx-text-fill: black;" text="pressure" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="178.0">
+                                <Label fx:id="pressure" alignment="CENTER" layoutX="165.0" layoutY="55.0" prefHeight="27.0" prefWidth="159.0" style="-fx-text-fill: black;" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="178.0">
                                     <font>
                                         <Font name="Lato Black" size="18.0" />
                                     </font>
@@ -128,13 +128,13 @@
                                 </AnchorPane>
                                 <AnchorPane layoutY="15.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <Label fx:id="tomorrow" layoutX="46.0" layoutY="7.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" text="tomorrow" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+                                        <Label fx:id="tomorrow" layoutX="46.0" layoutY="7.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                         <ImageView fx:id="img1" fitHeight="80.0" fitWidth="80.0" layoutX="394.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                        <Label fx:id="tomorrowDescription" layoutX="47.0" layoutY="40.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" text="Label" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                        <Label fx:id="tomorrowDescription" layoutX="47.0" layoutY="40.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
@@ -143,13 +143,13 @@
                                 </AnchorPane>
                                 <AnchorPane layoutY="95.0" prefHeight="80.0" prefWidth="498.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <Label fx:id="dayAfter" layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" text="dayAfter" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+                                        <Label fx:id="dayAfter" layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                         <ImageView fx:id="img2" fitHeight="80.0" fitWidth="80.0" layoutX="378.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                        <Label fx:id="dayAfterDescription" layoutX="46.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" text="Label" wrapText="true" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                        <Label fx:id="dayAfterDescription" layoutX="46.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" wrapText="true" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
@@ -158,13 +158,13 @@
                                 </AnchorPane>
                                 <AnchorPane layoutY="257.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <Label fx:id="dayDayDayAfter" layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" text="daydaydayafter" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+                                        <Label fx:id="dayDayDayAfter" layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                         <ImageView fx:id="img4" fitHeight="80.0" fitWidth="80.0" layoutX="400.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                        <Label fx:id="dayDayDayAfterDescription" layoutX="47.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" text="Label" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                        <Label fx:id="dayDayDayAfterDescription" layoutX="47.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
@@ -173,13 +173,13 @@
                                 </AnchorPane>
                                 <AnchorPane layoutY="176.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <Label fx:id="dayDayAfter" layoutX="47.0" layoutY="8.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" text="daydayafter" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+                                        <Label fx:id="dayDayAfter" layoutX="47.0" layoutY="8.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                         <ImageView fx:id="img3" fitHeight="80.0" fitWidth="80.0" layoutX="356.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                        <Label fx:id="dayDayAfterDescription" layoutX="47.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" text="Label" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                        <Label fx:id="dayDayAfterDescription" layoutX="47.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>

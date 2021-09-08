@@ -72,7 +72,6 @@ public class WeatherTool {
     public void fetchLocalApi(){
         try{
             local = new URL("http://ip-api.com/xml").openConnection().getInputStream();
-            System.out.println("local1 "+local);
             this.connectionIsOpen=true;
         }catch(UnknownHostException | MalformedURLException e){
             this.connectionIsOpen=false;
