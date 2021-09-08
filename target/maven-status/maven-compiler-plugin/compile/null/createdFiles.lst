@@ -1,4 +1,7 @@
-pl\agatarachanska\PrimaryController.class
 pl\agatarachanska\App.class
+pl\agatarachanska\controller\Weather.class
+pl\agatarachanska\model\ImagesTool.class
+pl\agatarachanska\model\Forecast.class
 module-info.class
-pl\agatarachanska\SecondaryController.class
+pl\agatarachanska\model\WeatherMenager.class
+pl\agatarachanska\model\WeatherTool.class
