@@ -1,9 +1,9 @@
 package pl.agatarachanska.model;
 
 public class ImagesTool {
-    public static String getImage(String icon){
+    public static String getImage(String icon) {
 
-        switch(icon){
+        switch (icon) {
             case "01d":
                 return "/images/01d.png";
             case "01n":

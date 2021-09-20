@@ -62,31 +62,31 @@ public class WeatherTool {
     private boolean connectionIsOpen;
     private ResourceBundle resourceBundle;
 
-    public WeatherTool(String city,ResourceBundle resourceBundle){
-        this.city=city;
-        this.resourceBundle=resourceBundle;
-        Locale currentLocale=Locale.getDefault();
-        if(currentLocale.getDisplayLanguage().equals("polski")){
-            this.language ="pl";
+    public WeatherTool(String city, ResourceBundle resourceBundle) {
+        this.city = city;
+        this.resourceBundle = resourceBundle;
+        Locale currentLocale = Locale.getDefault();
+        if (currentLocale.getDisplayLanguage().equals("polski")) {
+            this.language = "pl";
         } else this.language = "en";
     }
 
-    public void fetchLocalApi(){
-        try{
+    public void fetchLocalApi() {
+        try {
             local = new URL("http://ip-api.com/xml").openConnection().getInputStream();
-            this.connectionIsOpen=true;
-        }catch(UnknownHostException | MalformedURLException e){
-            this.connectionIsOpen=false;
+            this.connectionIsOpen = true;
+        } catch (UnknownHostException | MalformedURLException e) {
+            this.connectionIsOpen = false;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void downloadDataFromApi(){
+    private void downloadDataFromApi() {
         XMLInputFactory inputFactory =
                 XMLInputFactory.newInstance();
         fetchLocalApi();
-        try{
+        try {
             XMLStreamReader reader =
                     inputFactory.createXMLStreamReader(local);
             reader.next();
@@ -113,30 +113,30 @@ public class WeatherTool {
             reader.close();
         } catch (XMLStreamException e) {
             e.printStackTrace();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public String coordinateWeather(){
+    public String coordinateWeather() {
         downloadDataFromApi();
         return "http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude +
-                "&units=metric&mode=xml&lang="+language+"&appid=a539a1d5b32e2518dfe9ca8abf12434c";
+                "&units=metric&mode=xml&lang=" + language + "&appid=a539a1d5b32e2518dfe9ca8abf12434c";
     }
 
-    public String cityWeather(){
+    public String cityWeather() {
         String town = city.toString();
         String api = "http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(town, StandardCharsets.UTF_8) +
-                "&units=metric&mode=xml&lang="+language+"&appid=a539a1d5b32e2518dfe9ca8abf12434c";
+                "&units=metric&mode=xml&lang=" + language + "&appid=a539a1d5b32e2518dfe9ca8abf12434c";
         downloadDataFromApi();
         return api;
     }
 
-    public void downloadDataWeather(String api){
+    public void downloadDataWeather(String api) {
         forecast.clear();
         forecasts.clear();
 
-        try{
+        try {
             InputStream weatherApi = new URL(api).openConnection().getInputStream();
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 
@@ -144,35 +144,35 @@ public class WeatherTool {
 
             reader.next();
 
-            while(reader.hasNext()){
+            while (reader.hasNext()) {
                 int eventType = reader.getEventType();
-                if(eventType == XMLStreamReader.START_ELEMENT){
+                if (eventType == XMLStreamReader.START_ELEMENT) {
                     String element = reader.getLocalName();
 
-                    if(element.equals("temperature")){
+                    if (element.equals("temperature")) {
                         temperature = reader.getAttributeValue(1);
                         forecast.add(temperature);
                     }
-                    if(element.equals("name")){
+                    if (element.equals("name")) {
                         city = reader.getElementText();
                     }
-                    if(element.equals("time")){
+                    if (element.equals("time")) {
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
                         String time = reader.getAttributeValue(1);
-                        try{
+                        try {
                             date = simpleDateFormat.parse(time);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
                     }
-                    if(element.equals("pressure")){
+                    if (element.equals("pressure")) {
                         pressure = reader.getAttributeValue(1);
                         forecast.add(pressure);
                     }
-                    if(element.equals("symbol")){
+                    if (element.equals("symbol")) {
                         String symbol = reader.getAttributeValue(2);
                         String description = reader.getAttributeValue(1);
-                        Forecast temp = new Forecast(temperature,symbol,description,date,pressure);
+                        Forecast temp = new Forecast(temperature, symbol, description, date, pressure);
                         forecasts.add(temp);
                     }
                 }
@@ -186,17 +186,17 @@ public class WeatherTool {
             e.printStackTrace();
         }
 
-        if(forecast.isEmpty()){
+        if (forecast.isEmpty()) {
             forecast.add("0");
-            forecasts.add(new Forecast(temp,sym,descript,clock,press));
-        }else{
+            forecasts.add(new Forecast(temp, sym, descript, clock, press));
+        } else {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(TIME_FORMAT);
             List<Integer> array = new ArrayList();
 
-            for(int i=0 ; i<forecasts.size();i++){
+            for (int i = 0; i < forecasts.size(); i++) {
                 String now = simpleDateFormat.format(forecasts.get(i).time);
                 //na ktorej pozycji jest 6 rano
-                if(now.equals(TIME_WEATHER)){
+                if (now.equals(TIME_WEATHER)) {
                     array.add(i);
                 }
             }
@@ -211,20 +211,20 @@ public class WeatherTool {
             List<Double> day3 = new ArrayList<>();
 
             //przyporzadkowanie temperatur do nastepnych dni
-            for(int i = fetchDataFromArray; i<fetchDataFromArray1; i++){
+            for (int i = fetchDataFromArray; i < fetchDataFromArray1; i++) {
                 Double temp = Double.parseDouble(forecasts.get(i).temperature);
                 day.add(temp);
             }
 
-            for(int i = fetchDataFromArray1;i<fetchDataFromArray2;i++){
+            for (int i = fetchDataFromArray1; i < fetchDataFromArray2; i++) {
                 Double temp = Double.parseDouble(forecasts.get(i).temperature);
                 day1.add(temp);
             }
-            for(int i = fetchDataFromArray2;i<fetchDataFromArray3;i++){
+            for (int i = fetchDataFromArray2; i < fetchDataFromArray3; i++) {
                 Double temp = Double.parseDouble(forecasts.get(i).temperature);
                 day2.add(temp);
             }
-            for(int i = fetchDataFromArray3;i<fetchDataFromArray3+NEXT_DAY;i++){
+            for (int i = fetchDataFromArray3; i < fetchDataFromArray3 + NEXT_DAY; i++) {
                 Double temp = Double.parseDouble(forecasts.get(i).temperature);
                 day3.add(temp);
             }
@@ -237,46 +237,46 @@ public class WeatherTool {
             Collections.sort(day3);
 
             //wybiera najwieksza w ciagu dnia
-            int first = day.get(day.size()-1).intValue();
-            int second =day1.get(day.size()-1).intValue();
-            int third =day2.get(day.size()-1).intValue();
-            int fourth = day3.get(day.size()-1).intValue();
+            int first = day.get(day.size() - 1).intValue();
+            int second = day1.get(day.size() - 1).intValue();
+            int third = day2.get(day.size() - 1).intValue();
+            int fourth = day3.get(day.size() - 1).intValue();
 
             String tempTomorrow = Integer.toString(first);
             String tempDay = Integer.toString(second);
             String tempDayDay = Integer.toString(third);
             String tempDayDayDay = Integer.toString(fourth);
 
-            this.tempToday = forecast.get(0).substring(0,3);
+            this.tempToday = forecast.get(0).substring(0, 3);
             this.pressureToday = forecasts.get(fetchDataFromArray).pressure;
-            this.todayDay = forecasts.get(0).time.toString().substring(0,3);
+            this.todayDay = forecasts.get(0).time.toString().substring(0, 3);
             this.descriptionToday = forecasts.get(0).description;
 
-            Locale currentLocale=Locale.getDefault();
-            String descriptionTomorrow= forecasts.get(fetchDataFromArray).description;
-            String descriptionDay= forecasts.get(fetchDataFromArray1).description;
-            String descriptionDayDay= forecasts.get(fetchDataFromArray2).description;
-            String descriptionDayDayDay =forecasts.get(fetchDataFromArray3).description;
+            Locale currentLocale = Locale.getDefault();
+            String descriptionTomorrow = forecasts.get(fetchDataFromArray).description;
+            String descriptionDay = forecasts.get(fetchDataFromArray1).description;
+            String descriptionDayDay = forecasts.get(fetchDataFromArray2).description;
+            String descriptionDayDayDay = forecasts.get(fetchDataFromArray3).description;
 
-            this.tomorrow = " "+dayName(forecasts.get(fetchDataFromArray).time.toString().substring(0,4))+
-                    "  "+tempTomorrow+"ºC  "+forecasts.get(fetchDataFromArray).pressure +" hPa";
+            this.tomorrow = " " + dayName(forecasts.get(fetchDataFromArray).time.toString().substring(0, 4)) +
+                    "  " + tempTomorrow + "ºC  " + forecasts.get(fetchDataFromArray).pressure + " hPa";
 
-            this.tomorrowDescription =" "+descriptionTomorrow;
+            this.tomorrowDescription = " " + descriptionTomorrow;
 
-            this.dayAfter = " "+dayName(forecasts.get(fetchDataFromArray1).time.toString().substring(0,4))+
-                    "  "+tempDay+"ºC   "+forecasts.get(fetchDataFromArray1).pressure +" hPa";
+            this.dayAfter = " " + dayName(forecasts.get(fetchDataFromArray1).time.toString().substring(0, 4)) +
+                    "  " + tempDay + "ºC   " + forecasts.get(fetchDataFromArray1).pressure + " hPa";
 
-            this.dayAfterDescription = " "+descriptionDay;
+            this.dayAfterDescription = " " + descriptionDay;
 
-            this.dayDayAfter =" "+dayName(forecasts.get(fetchDataFromArray2).time.toString().substring(0,4))+
-                    "  "+tempDayDay+"ºC  "+forecasts.get(fetchDataFromArray2).pressure +" hPa";
+            this.dayDayAfter = " " + dayName(forecasts.get(fetchDataFromArray2).time.toString().substring(0, 4)) +
+                    "  " + tempDayDay + "ºC  " + forecasts.get(fetchDataFromArray2).pressure + " hPa";
 
-            this.dayDayAfterDescription =" "+descriptionDayDay;
+            this.dayDayAfterDescription = " " + descriptionDayDay;
 
-            this.dayDayDayAfter =" "+dayName(forecasts.get(fetchDataFromArray3).time.toString().substring(0,4))+
-                    "  "+tempDayDayDay+"ºC  "+forecasts.get(fetchDataFromArray3).pressure +" hPa";
+            this.dayDayDayAfter = " " + dayName(forecasts.get(fetchDataFromArray3).time.toString().substring(0, 4)) +
+                    "  " + tempDayDayDay + "ºC  " + forecasts.get(fetchDataFromArray3).pressure + " hPa";
 
-            this.dayDayDayAfterDescription = " "+descriptionDayDayDay;
+            this.dayDayDayAfterDescription = " " + descriptionDayDayDay;
 
             this.icon0 = forecasts.get(0).symbol;
             this.iconA = forecasts.get(fetchDataFromArray).symbol;
@@ -286,34 +286,39 @@ public class WeatherTool {
 
         }
     }
+
     private String dayName(String name) {
         switch (name) {
-                case "Mon ":
-                    return resourceBundle.getString("poniedzialek").substring(0,2)+".";
-                case "Tue ":
-                    return resourceBundle.getString("wtorek").substring(0,2)+".";
-                case "Wed ":
-                    return resourceBundle.getString("sroda").substring(0,2)+".";
-                case "Thu ":
-                    return resourceBundle.getString("czwartek").substring(0,2)+".";
-                case "Fri ":
-                    return resourceBundle.getString("piatek").substring(0,2)+".";
-                case "Sat ":
-                    return resourceBundle.getString("sobota").substring(0,2)+".";
-                case "Sun ":
-                    return resourceBundle.getString("niedziela").substring(0,2)+".";
-                default:
-                    return "";
-            }
+            case "Mon ":
+                return resourceBundle.getString("poniedzialek").substring(0, 2) + ".";
+            case "Tue ":
+                return resourceBundle.getString("wtorek").substring(0, 2) + ".";
+            case "Wed ":
+                return resourceBundle.getString("sroda").substring(0, 2) + ".";
+            case "Thu ":
+                return resourceBundle.getString("czwartek").substring(0, 2) + ".";
+            case "Fri ":
+                return resourceBundle.getString("piatek").substring(0, 2) + ".";
+            case "Sat ":
+                return resourceBundle.getString("sobota").substring(0, 2) + ".";
+            case "Sun ":
+                return resourceBundle.getString("niedziela").substring(0, 2) + ".";
+            default:
+                return "";
+        }
     }
-    public String getCity(){
+
+    public String getCity() {
         return city;
     }
+
     public String getIcon0() {
         return icon0;
     }
 
-    public String getIconA() { return iconA; }
+    public String getIconA() {
+        return iconA;
+    }
 
     public String getIconB() {
         return iconB;
@@ -326,33 +331,56 @@ public class WeatherTool {
     public String getIconD() {
         return iconD;
     }
-    public String getTodayDay(){
+
+    public String getTodayDay() {
         return todayDay;
     }
-    public String getDescriptionToday(){
+
+    public String getDescriptionToday() {
         return descriptionToday;
     }
-    public String getTempToday(){
+
+    public String getTempToday() {
         return tempToday;
     }
-    public String getPressureToday(){
+
+    public String getPressureToday() {
         return pressureToday;
     }
-    public String getTomorrow(){
+
+    public String getTomorrow() {
         return tomorrow;
     }
-    public String getDayAfter(){
+
+    public String getDayAfter() {
         return dayAfter;
     }
-    public String getDayDayAfter(){
+
+    public String getDayDayAfter() {
         return dayDayAfter;
     }
-    public String getDayDayDayAfter(){
+
+    public String getDayDayDayAfter() {
         return dayDayDayAfter;
     }
-    public String getTomorrowDescription(){ return tomorrowDescription;}
-    public String getDayAfterDescription() {return dayAfterDescription; }
-    public String getDayDayAfterDescription() { return dayDayAfterDescription; }
-    public String getDayDayDayAfterDescription() { return dayDayDayAfterDescription; }
-    public boolean getConnectionIsOpen(){return connectionIsOpen;}
+
+    public String getTomorrowDescription() {
+        return tomorrowDescription;
+    }
+
+    public String getDayAfterDescription() {
+        return dayAfterDescription;
+    }
+
+    public String getDayDayAfterDescription() {
+        return dayDayAfterDescription;
+    }
+
+    public String getDayDayDayAfterDescription() {
+        return dayDayDayAfterDescription;
+    }
+
+    public boolean getConnectionIsOpen() {
+        return connectionIsOpen;
+    }
 }
