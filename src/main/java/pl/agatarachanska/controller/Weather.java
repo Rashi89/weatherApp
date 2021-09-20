@@ -25,9 +25,9 @@ import java.util.ResourceBundle;
 
 public class Weather implements Initializable {
 
+    public String citySet;
     private WeatherManager weatherManager;
     private WeatherTool weatherTool;
-    public String citySet;
     private Date datas;
 
     @FXML
@@ -118,7 +118,7 @@ public class Weather implements Initializable {
 
     private void showForecast() {
 
-        weatherTool.cityWeather();
+        weatherTool.weatherInTheSelectedCity();
         tomorrow.setText(weatherTool.getTomorrow());
         tomorrowDescription.setText(weatherTool.getTomorrowDescription());
         dayAfter.setText(weatherTool.getDayAfter());
@@ -197,7 +197,7 @@ public class Weather implements Initializable {
         weatherTool = new WeatherTool(citySet, resourceBundle);
         weatherTool.fetchLocalApi();
         if (weatherTool.getConnectionIsOpen()) {
-            weatherTool.coordinateWeather();
+            weatherTool.weatherInYourRegion();
             temperature1.setText(weatherTool.getTempToday() + "°C");
             desc1.setText(weatherTool.getDescriptionToday().toUpperCase());
             pressure1.setText(weatherTool.getPressureToday() + " hPa");
