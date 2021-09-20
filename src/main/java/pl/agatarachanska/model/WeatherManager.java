@@ -7,11 +7,14 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class WeatherMenager {
+public class WeatherManager {
+
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("EEEE",Locale.ENGLISH);
     private final String city;
 
     private String day;
@@ -27,7 +30,7 @@ public class WeatherMenager {
 
     private static final String KEY_API="a539a1d5b32e2518dfe9ca8abf12434c";
 
-    public WeatherMenager(String city, ResourceBundle resourceBundle) {
+    public WeatherManager(String city, ResourceBundle resourceBundle) {
         this.city = city;
         this.resourceBundle= resourceBundle;
         Locale currentLocale = Locale.getDefault();
@@ -52,18 +55,11 @@ public class WeatherMenager {
     }
 
     public void fetchDataWeather(){
-        int date =0;
-        String nameDay;
 
         JSONObject json;
         JSONObject jsonDetails;
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE",Locale.ENGLISH);
-        Calendar calendar  = Calendar.getInstance();
-
         try{
-            String town = city.toString();
-            json = readJsonFromURL("http://api.openweathermap.org/data/2.5/weather?q=" + URLEncoder.encode(town, StandardCharsets.UTF_8) + "&appid=" + KEY_API +"&lang="+language+"&units=metric");
+            json = readJsonFromURL("http://api.openweathermap.org/data/2.5/weather?q=" + URLEncoder.encode(city, StandardCharsets.UTF_8) + "&appid=" + KEY_API +"&lang="+language+"&units=metric");
 
         }catch (IOException | JSONException e) {
             return;
@@ -78,8 +74,11 @@ public class WeatherMenager {
         jsonDetails =json.getJSONObject("clouds");
         this.cloudy = jsonDetails.get("all").toString();
 
-        calendar.add(Calendar.DATE,date);
-        nameDay = dateFormat.format(calendar.getTime());
+        LocalDate today= LocalDate.now();
+        DayOfWeek dayOfWeek = DayOfWeek.from(today);
+        String nameDay;
+        nameDay = dayOfWeek.name();
+
         this.day = changeDate(nameDay, resourceBundle);
         jsonDetails =json.getJSONArray("weather").getJSONObject(0);
         this.description = jsonDetails.get("description").toString();

@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.json.JSONException;
 import pl.agatarachanska.model.ImagesTool;
-import pl.agatarachanska.model.WeatherMenager;
+import pl.agatarachanska.model.WeatherManager;
 import pl.agatarachanska.model.WeatherTool;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 public class Weather implements Initializable {
 
-    private WeatherMenager weatherMenager;
+    private WeatherManager weatherManager;
     private WeatherTool weatherTool;
     public String citySet;
     private Date datas;
@@ -80,7 +80,7 @@ public class Weather implements Initializable {
                 this.citySet = cityName.getText().trim();
                 cityName.setText((citySet.trim()).toUpperCase());
                 weatherTool = new WeatherTool(citySet,resourceBundle);
-                weatherMenager = new WeatherMenager(citySet,resourceBundle);
+                weatherManager = new WeatherManager(citySet,resourceBundle);
                 weatherTool.fetchLocalApi();
                 if(!weatherTool.getConnectionIsOpen()){
                     city.setText("Error!");
@@ -101,12 +101,12 @@ public class Weather implements Initializable {
         }
     }
     public void showWeather() throws JSONException {
-        weatherMenager.fetchDataWeather();
-        city.setText(weatherMenager.getCity().toUpperCase());
-        temperature.setText(weatherMenager.getTemperature().toString() + "°C");
-        desc.setText(weatherMenager.getDescription().toUpperCase());
-        img.setImage(new Image(ImagesTool.getImage(weatherMenager.getIcon())));
-        pressure.setText(weatherMenager.getPressure() + " hPa");
+        weatherManager.fetchDataWeather();
+        city.setText(weatherManager.getCity().toUpperCase());
+        temperature.setText(weatherManager.getTemperature().toString() + "°C");
+        desc.setText(weatherManager.getDescription().toUpperCase());
+        img.setImage(new Image(ImagesTool.getImage(weatherManager.getIcon())));
+        pressure.setText(weatherManager.getPressure() + " hPa");
 
     }
     private void showForecast() {
@@ -185,7 +185,7 @@ public class Weather implements Initializable {
         String nameDay = setDayNames(name, resourceBundle);
         day.setText(nameDay);
         this.resourceBundle = resourceBundle;
-        weatherMenager = new WeatherMenager(citySet,resourceBundle);
+        weatherManager = new WeatherManager(citySet,resourceBundle);
         weatherTool = new WeatherTool(citySet,resourceBundle);
         weatherTool.fetchLocalApi();
         if(weatherTool.getConnectionIsOpen()) {
