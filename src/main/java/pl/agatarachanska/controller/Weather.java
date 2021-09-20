@@ -118,8 +118,7 @@ public class Weather implements Initializable {
 
     private void showForecast() {
 
-        String weatherApi = weatherTool.cityWeather();
-        weatherTool.downloadDataWeather(weatherApi);
+        weatherTool.cityWeather();
         tomorrow.setText(weatherTool.getTomorrow());
         tomorrowDescription.setText(weatherTool.getTomorrowDescription());
         dayAfter.setText(weatherTool.getDayAfter());
@@ -198,9 +197,7 @@ public class Weather implements Initializable {
         weatherTool = new WeatherTool(citySet, resourceBundle);
         weatherTool.fetchLocalApi();
         if (weatherTool.getConnectionIsOpen()) {
-            String dateFromApi = weatherTool.coordinateWeather();
-            weatherTool.downloadDataWeather(dateFromApi);
-
+            weatherTool.coordinateWeather();
             temperature1.setText(weatherTool.getTempToday() + "°C");
             desc1.setText(weatherTool.getDescriptionToday().toUpperCase());
             pressure1.setText(weatherTool.getPressureToday() + " hPa");

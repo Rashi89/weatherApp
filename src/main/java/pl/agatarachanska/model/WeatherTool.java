@@ -15,6 +15,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class WeatherTool {
+    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    private static final String TIME_FORMAT = "HH:mm:ss";
+    private static final String TIME_WEATHER = "06:00:00";
+    private static final Integer NEXT_DAY = 8;
+
     private InputStream local;
     private Date date;
     private String city;
@@ -46,15 +51,10 @@ public class WeatherTool {
     public String press;
     public Date clock;
 
-    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
-    private static final String TIME_FORMAT = "HH:mm:ss";
-    private static final String TIME_WEATHER = "06:00:00";
-    private static final Integer NEXT_DAY = 8;
-
     public List<String> forecast = new ArrayList<>();
     public List<Forecast> forecasts = new ArrayList<>();
 
-    public String language;
+    private String language;
     private String tomorrowDescription;
     private String dayAfterDescription;
     private String dayDayAfterDescription;
@@ -66,9 +66,7 @@ public class WeatherTool {
         this.city = city;
         this.resourceBundle = resourceBundle;
         Locale currentLocale = Locale.getDefault();
-        if (currentLocale.getDisplayLanguage().equals("polski")) {
-            this.language = "pl";
-        } else this.language = "en";
+        this.language = currentLocale.getLanguage();
     }
 
     public void fetchLocalApi() {
@@ -118,21 +116,21 @@ public class WeatherTool {
         }
     }
 
-    public String coordinateWeather() {
+    public void coordinateWeather() {
         downloadDataFromApi();
-        return "http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude +
+        String api = "http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude +
                 "&units=metric&mode=xml&lang=" + language + "&appid=a539a1d5b32e2518dfe9ca8abf12434c";
+        downloadDataWeather(api);
     }
 
-    public String cityWeather() {
-        String town = city.toString();
-        String api = "http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(town, StandardCharsets.UTF_8) +
+    public void cityWeather() {
+        String api = "http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(city, StandardCharsets.UTF_8) +
                 "&units=metric&mode=xml&lang=" + language + "&appid=a539a1d5b32e2518dfe9ca8abf12434c";
         downloadDataFromApi();
-        return api;
+        downloadDataWeather(api);
     }
 
-    public void downloadDataWeather(String api) {
+    private void downloadDataWeather(String api) {
         forecast.clear();
         forecasts.clear();
 
