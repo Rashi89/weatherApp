@@ -16,8 +16,6 @@ import org.json.JSONException;
 import pl.agatarachanska.model.ImagesTool;
 import pl.agatarachanska.model.WeatherMenager;
 import pl.agatarachanska.model.WeatherTool;
-
-import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,7 +43,8 @@ public class Weather implements Initializable {
 
     @FXML
     private Button change,set,cancel;
-    private String language;
+    private ResourceBundle resourceBundle;
+
 
     public Weather(){this.citySet="Cracow".toUpperCase();}
 
@@ -74,23 +73,19 @@ public class Weather implements Initializable {
         System.out.println(cityName.getText());
         city.setStyle("-fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db)");
         if (cityName.getText().equals("")) {
-            if(language.equals("polski")){
-                showToast("Nazwa miasta nie może być pusta!");
-            }else showToast("City Name cannot be blank");
+            showToast(resourceBundle.getString("blankCityName"));
         } else {
             try {
                 city.setStyle("-fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db)");
                 this.citySet = cityName.getText().trim();
                 cityName.setText((citySet.trim()).toUpperCase());
-                weatherTool = new WeatherTool(citySet);
-                weatherMenager = new WeatherMenager(citySet);
+                weatherTool = new WeatherTool(citySet,resourceBundle);
+                weatherMenager = new WeatherMenager(citySet,resourceBundle);
                 weatherTool.fetchLocalApi();
                 if(!weatherTool.getConnectionIsOpen()){
                     city.setText("Error!");
                     city.setStyle("-fx-text-fill:red;");
-                    if(language.equals("polski")){
-                        showToast("Brak Internetu!");
-                    }else { showToast("Internet Down. Please Connect "); }
+                    showToast(resourceBundle.getString("brakInternetu"));
                     reset();
                 }else {
                     showWeather();
@@ -100,11 +95,7 @@ public class Weather implements Initializable {
             } catch (Exception e) {
                 city.setText("Error!");
                 city.setStyle("-fx-text-fill:red;");
-                if(language.equals("polski")){
-                    showToast("Nie znaleziono prognozy dla wybranego miasta");
-                }else {
-                    showToast("City with the given name was not found.");
-                }
+                showToast(resourceBundle.getString("brakPrognozy"));
                 reset();
             }
         }
@@ -113,7 +104,6 @@ public class Weather implements Initializable {
         weatherMenager.fetchDataWeather();
         city.setText(weatherMenager.getCity().toUpperCase());
         temperature.setText(weatherMenager.getTemperature().toString() + "°C");
-//        day.setText(weatherMenager.getDay().toUpperCase());
         desc.setText(weatherMenager.getDescription().toUpperCase());
         img.setImage(new Image(ImagesTool.getImage(weatherMenager.getIcon())));
         pressure.setText(weatherMenager.getPressure() + " hPa");
@@ -166,43 +156,24 @@ public class Weather implements Initializable {
         });
     }
 
-    public String setDayNames(String dzisiejszyDzien, String jezyk) {
+    public String setDayNames(String dzisiejszyDzien, ResourceBundle resourceBundle) {
         datas = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        if (jezyk.equals("polski")) {
-            switch (dzisiejszyDzien) {
-                case "Mon":
-                    return "PONIEDZIAŁEK " + formatter.format(datas);
+        switch(dzisiejszyDzien){
+            case "Mon":
+                    return resourceBundle.getString("poniedzialek")+" "+ formatter.format(datas);
                 case "Tue":
-                    return "WTOREK " + formatter.format(datas);
+                    return resourceBundle.getString("wtorek")+" "+ formatter.format(datas);
                 case "Wed":
-                    return "ŚRODA " + formatter.format(datas);
+                    return resourceBundle.getString("sroda")+" "+ formatter.format(datas);
                 case "Thu":
-                    return "CZWARTEK " + formatter.format(datas);
+                    return resourceBundle.getString("czwartek")+" "+ formatter.format(datas);
                 case "Fri":
-                    return "PIĄTEK " + formatter.format(datas);
+                    return resourceBundle.getString("piatek")+" "+ formatter.format(datas);
                 case "Sat":
-                    return "SOBOTA " + formatter.format(datas);
+                    return resourceBundle.getString("sobota")+" "+ formatter.format(datas);
                 case "Sun":
-                    return "NIEDZIELA " + formatter.format(datas);
-            }
-        } else {
-            switch (dzisiejszyDzien) {
-                case "Mon":
-                    return "MONDAY " + formatter.format(datas);
-                case "Tue":
-                    return "TUESDAY " + formatter.format(datas);
-                case "Wed":
-                    return "WEDNESDAY " + formatter.format(datas);
-                case "Thu":
-                    return "THURSDAY " + formatter.format(datas);
-                case "Fri":
-                    return "FRIDAY " + formatter.format(datas);
-                case "Sat":
-                    return "SATURDAY " + formatter.format(datas);
-                case "Sun":
-                    return "SUNDAY " + formatter.format(datas);
-            }
+                    return resourceBundle.getString("niedziela")+" "+ formatter.format(datas);
         }
         return "brak";
     }
@@ -210,13 +181,12 @@ public class Weather implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Locale currentLocale=Locale.getDefault();
         String name = new SimpleDateFormat("EEE",Locale.ENGLISH).format(new Date());
-        String nameDay = setDayNames(name, currentLocale.getDisplayLanguage());
+        String nameDay = setDayNames(name, resourceBundle);
         day.setText(nameDay);
-        this.language=currentLocale.getDisplayLanguage();
-        weatherMenager = new WeatherMenager(citySet);
-        weatherTool = new WeatherTool(citySet);
+        this.resourceBundle = resourceBundle;
+        weatherMenager = new WeatherMenager(citySet,resourceBundle);
+        weatherTool = new WeatherTool(citySet,resourceBundle);
         weatherTool.fetchLocalApi();
         if(weatherTool.getConnectionIsOpen()) {
             String dateFromApi = weatherTool.coordinateWeather();
@@ -242,9 +212,7 @@ public class Weather implements Initializable {
             img8.setImage(new Image("/images/" + weatherTool.getIconC() + ".png"));
             img9.setImage(new Image("/images/" + weatherTool.getIconD() + ".png"));
         }else{
-            if(language.equals("polski")) {
-                showToast("Brak internetu!!!!");
-            }else showToast("Internet Down. Please Connect");
+            showToast(resourceBundle.getString("brakInternetu"));
         }
         if (!cityName.getText().equals("City Name")&&!cityName.getText().equals("Nazwa miasta")) {
             citySet=cityName.getText();
@@ -259,19 +227,13 @@ public class Weather implements Initializable {
                 showForecast();
             } catch (Exception e) {
                 city.setStyle("-fx-text-fill:red;");
-                if(currentLocale.getDisplayLanguage().equals("polski")){
-                    city.setText("Error! - Brak Internetu");
-                    showToast("Brak Internetu. Połącz sie ponownie!");
-                }else {
-                    city.setText("Error! - No Internet");
-                    city.setTextFill(Color.RED);
-                    showToast("Internet Down. Please Connect");
-                }
+                city.setTextFill(Color.RED);
+                city.setText(resourceBundle.getString("error"));
+                showToast(resourceBundle.getString("brakInternetu"));
                 reset();
                 change.setDisable(true);
                 cityName.setText("");
             }
-
             cityName.setOnKeyPressed(e -> {
                 if (e.getCode() == KeyCode.ENTER) {
                     setPressed();
@@ -279,7 +241,7 @@ public class Weather implements Initializable {
             });
 
         }else{
-            weatherTool = new WeatherTool(citySet);
+            weatherTool = new WeatherTool(citySet,resourceBundle);
             set.setVisible(false);
             cancel.setVisible(false);
             cityName.setDisable(true);

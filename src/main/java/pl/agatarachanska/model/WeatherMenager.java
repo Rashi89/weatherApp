@@ -1,10 +1,7 @@
 package pl.agatarachanska.model;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
@@ -12,35 +9,36 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class WeatherMenager {
     private final String city;
 
     private String day;
-    private Integer temperatura;
-    private String predkoscWiatru;
+    private Integer temperature;
+    private String windSpeed;
     private String icon;
-    private String opis;
-    private String zachmurzenie;
-    private String cisnienie;
-    private String wilgotnosc;
+    private String description;
+    private String cloudy;
+    private String pressure;
+    private String moisture;
+    private ResourceBundle resourceBundle;
     private String language;
 
     private static final String KEY_API="a539a1d5b32e2518dfe9ca8abf12434c";
 
-    public WeatherMenager(String city) {
+    public WeatherMenager(String city, ResourceBundle resourceBundle) {
         this.city = city;
-        Locale currentLocale=Locale.getDefault();
-        if(currentLocale.getDisplayLanguage().equals("polski")){
-            this.language ="pl";
-        } else this.language = "en";
+        this.resourceBundle= resourceBundle;
+        Locale currentLocale = Locale.getDefault();
+        this.language=currentLocale.getLanguage();
     }
 
     private String read(Reader reader) throws IOException {
         StringBuffer stringBuffer = new StringBuffer();
-        int ilosc;
-        while((ilosc = reader.read())!=-1){
-            stringBuffer.append((char) ilosc);
+        int quantity;
+        while((quantity = reader.read())!=-1){
+            stringBuffer.append((char) quantity);
         }
         return stringBuffer.toString();
     }
@@ -72,47 +70,37 @@ public class WeatherMenager {
         }
 
         jsonDetails = json.getJSONObject("main");
-        this.temperatura = jsonDetails.getInt("temp");
-        this.cisnienie = jsonDetails.get("pressure").toString();
-        this.wilgotnosc = jsonDetails.get("humidity").toString();
+        this.temperature = jsonDetails.getInt("temp");
+        this.pressure = jsonDetails.get("pressure").toString();
+        this.moisture = jsonDetails.get("humidity").toString();
         jsonDetails = json.getJSONObject("wind");
-        this.predkoscWiatru =jsonDetails.get("speed").toString();
+        this.windSpeed =jsonDetails.get("speed").toString();
         jsonDetails =json.getJSONObject("clouds");
-        this.zachmurzenie = jsonDetails.get("all").toString();
+        this.cloudy = jsonDetails.get("all").toString();
 
         calendar.add(Calendar.DATE,date);
         nameDay = dateFormat.format(calendar.getTime());
-        Locale currentLocale=Locale.getDefault();
-
-        if(currentLocale.getDisplayLanguage().equals("polski")) {
-            this.day = changeDate(nameDay, currentLocale.getDisplayLanguage());
-        }else
-        {
-            this.day = nameDay;
-        }
-
+        this.day = changeDate(nameDay, resourceBundle);
         jsonDetails =json.getJSONArray("weather").getJSONObject(0);
-        this.opis = jsonDetails.get("description").toString();
+        this.description = jsonDetails.get("description").toString();
         this.icon =jsonDetails.get("icon").toString();
     }
-    public String changeDate(String day,String jezyk){
-        if(jezyk.equals("polski")) {
+    public String changeDate(String day,ResourceBundle resourceBundle){
             if (day.equals("Monday")) {
-                return "Poniedziałek";
+                return resourceBundle.getString("poniedzialek");
             } else if (day.equals("Tuesday")) {
-                return "Wtorek";
+                return resourceBundle.getString("wtorek");
             } else if (day.equals("Wednesday")) {
-                return "Środa";
+                return resourceBundle.getString("sroda");
             } else if (day.equals("Thursday")) {
-                return "Czwartek";
+                return resourceBundle.getString("czwartek");
             } else if (day.equals("Friday")) {
-                return "Piątek";
+                return resourceBundle.getString("piatek");
             } else if (day.equals("Saturday")) {
-                return "Sobota";
+                return resourceBundle.getString("sobota");
             } else if (day.equals("Sunday")) {
-                return "Niedziela";
+                return resourceBundle.getString("niedziela");
             }
-        }
         return "";
     }
     public String getCity() {
@@ -123,7 +111,7 @@ public class WeatherMenager {
     }
 
     public Integer getTemperature() {
-        return temperatura;
+        return temperature;
     }
 
     public String getIcon(){
@@ -131,20 +119,20 @@ public class WeatherMenager {
     }
 
     public String getDescription(){
-        return opis;
+        return description;
     }
 
     public String getWindSpeed(){
-        return predkoscWiatru;
+        return windSpeed;
     }
 
     public String getCloud(){
-        return zachmurzenie;
+        return cloudy;
     }
     public String getPressure(){
-        return cisnienie;
+        return pressure;
     }
-    public String getHumidity(){
-        return wilgotnosc;
+    public String getMoisture(){
+        return moisture;
     }
 }

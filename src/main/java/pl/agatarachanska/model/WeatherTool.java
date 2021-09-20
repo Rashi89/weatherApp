@@ -60,9 +60,11 @@ public class WeatherTool {
     private String dayDayAfterDescription;
     private String dayDayDayAfterDescription;
     private boolean connectionIsOpen;
+    private ResourceBundle resourceBundle;
 
-    public WeatherTool(String city){
+    public WeatherTool(String city,ResourceBundle resourceBundle){
         this.city=city;
+        this.resourceBundle=resourceBundle;
         Locale currentLocale=Locale.getDefault();
         if(currentLocale.getDisplayLanguage().equals("polski")){
             this.language ="pl";
@@ -210,20 +212,20 @@ public class WeatherTool {
 
             //przyporzadkowanie temperatur do nastepnych dni
             for(int i = fetchDataFromArray; i<fetchDataFromArray1; i++){
-                Double temp = Double.parseDouble(forecasts.get(i).temperatura);
+                Double temp = Double.parseDouble(forecasts.get(i).temperature);
                 day.add(temp);
             }
 
             for(int i = fetchDataFromArray1;i<fetchDataFromArray2;i++){
-                Double temp = Double.parseDouble(forecasts.get(i).temperatura);
+                Double temp = Double.parseDouble(forecasts.get(i).temperature);
                 day1.add(temp);
             }
             for(int i = fetchDataFromArray2;i<fetchDataFromArray3;i++){
-                Double temp = Double.parseDouble(forecasts.get(i).temperatura);
+                Double temp = Double.parseDouble(forecasts.get(i).temperature);
                 day2.add(temp);
             }
             for(int i = fetchDataFromArray3;i<fetchDataFromArray3+NEXT_DAY;i++){
-                Double temp = Double.parseDouble(forecasts.get(i).temperatura);
+                Double temp = Double.parseDouble(forecasts.get(i).temperature);
                 day3.add(temp);
             }
 
@@ -245,7 +247,7 @@ public class WeatherTool {
             String tempDayDay = Integer.toString(third);
             String tempDayDayDay = Integer.toString(fourth);
 
-            this.tempToday = forecast.get(0).substring(0, 2);
+            this.tempToday = forecast.get(0).substring(0,3);
             this.pressureToday = forecasts.get(fetchDataFromArray).pressure;
             this.todayDay = forecasts.get(0).time.toString().substring(0,3);
             this.descriptionToday = forecasts.get(0).description;
@@ -285,28 +287,24 @@ public class WeatherTool {
         }
     }
     private String dayName(String name) {
-        Locale currentLocale = Locale.getDefault();
-        if (currentLocale.getDisplayLanguage().equals("polski")) {
-            switch (name) {
+        switch (name) {
                 case "Mon ":
-                    return "Pon.";
+                    return resourceBundle.getString("poniedzialek").substring(0,2)+".";
                 case "Tue ":
-                    return "Wt.";
+                    return resourceBundle.getString("wtorek").substring(0,2)+".";
                 case "Wed ":
-                    return "Śr.";
+                    return resourceBundle.getString("sroda").substring(0,2)+".";
                 case "Thu ":
-                    return "Czw.";
+                    return resourceBundle.getString("czwartek").substring(0,2)+".";
                 case "Fri ":
-                    return "Pt.";
+                    return resourceBundle.getString("piatek").substring(0,2)+".";
                 case "Sat ":
-                    return "Sob.";
+                    return resourceBundle.getString("sobota").substring(0,2)+".";
                 case "Sun ":
-                    return "Niedz.";
+                    return resourceBundle.getString("niedziela").substring(0,2)+".";
                 default:
                     return "";
             }
-
-        } else return name;
     }
     public String getCity(){
         return city;
