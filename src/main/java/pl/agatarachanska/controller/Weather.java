@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class Weather implements Initializable {
 
-    public String citySet;
+    private String citySet;
     private WeatherManager weatherManager;
     private WeatherTool weatherTool;
     private Date datas;
@@ -46,39 +46,72 @@ public class Weather implements Initializable {
     private Button change, set, cancel;
     private ResourceBundle resourceBundle;
 
+    @FXML
+    void handleButtonCancel(javafx.event.ActionEvent event) {
+        String initialCity = city.getText();
+        cityName.setText(initialCity);
+        updateButtonsAndTextField(false);
+    }
+
+    @FXML
+    void handleButtonChange(javafx.event.ActionEvent event) {
+        cityName.setText("");
+        updateButtonsAndTextField(true);
+        cityName.requestFocus();
+    }
+
+    @FXML
+    void handleButtonSet(javafx.event.ActionEvent event) {
+        setPressed();
+    }
 
     public Weather() {
         this.citySet = "Cracow".toUpperCase();
     }
 
-    @FXML
-    void handleButtonClicks(javafx.event.ActionEvent event) {
-        String initialCity = city.getText();
-
-        if (event.getSource() == change) {
-            cityName.setText("");
-            bottomSet(true);
-            cityName.requestFocus();
-        } else if (event.getSource() == set) {
-            setPressed();
-        } else if (event.getSource() == cancel) {
-            cityName.setText(initialCity);
-            bottomSet(false);
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        String name = new SimpleDateFormat("EEE", Locale.ENGLISH).format(new Date());
+        String nameDay = setDayNames(name, resourceBundle);
+        day.setText(nameDay);
+        this.resourceBundle = resourceBundle;
+        weatherManager = new WeatherManager(citySet, resourceBundle);
+        weatherTool = new WeatherTool(citySet, resourceBundle);
+        weatherTool.fetchLocalApi();
+        if (weatherTool.getConnectionIsOpen()) {
+            showWeatherAndForecastInMyRegion();
+        } else {
+            showInfo(resourceBundle.getString("brakInternetu"));
+        }
+        if (!cityName.getText().equals("City Name") && !cityName.getText().equals("Nazwa miasta")) {
+            updateCityNameFieldAndButtons();
+            try {
+                showWeather();
+                showForecast();
+            } catch (Exception e) {
+                showErrorInfo();
+            }
+            cityName.setOnKeyPressed(e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    setPressed();
+                }
+            });
+        } else {
+            setVisibleButtonsAndDisableTextField();
         }
     }
 
-    private void bottomSet(boolean statement) {
-        cityName.setDisable(!statement);
-        set.setVisible(statement);
-        change.setVisible(!statement);
-        cancel.setVisible(statement);
+    private void updateButtonsAndTextField(boolean isInEditMode) {
+        cityName.setDisable(!isInEditMode);
+        set.setVisible(isInEditMode);
+        change.setVisible(!isInEditMode);
+        cancel.setVisible(isInEditMode);
     }
 
     private void setPressed() {
-        System.out.println(cityName.getText());
         city.setStyle("-fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db)");
         if (cityName.getText().equals("")) {
-            showToast(resourceBundle.getString("blankCityName"));
+            showInfo(resourceBundle.getString("blankCityName"));
         } else {
             try {
                 city.setStyle("-fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db)");
@@ -90,34 +123,40 @@ public class Weather implements Initializable {
                 if (!weatherTool.getConnectionIsOpen()) {
                     city.setText("Error!");
                     city.setStyle("-fx-text-fill:red;");
-                    showToast(resourceBundle.getString("brakInternetu"));
+                    showInfo(resourceBundle.getString("brakInternetu"));
                     reset();
                 } else {
                     showWeather();
                     showForecast();
-                    bottomSet(false);
+                    updateButtonsAndTextField(false);
                 }
             } catch (Exception e) {
                 city.setText("Error!");
                 city.setStyle("-fx-text-fill:red;");
-                showToast(resourceBundle.getString("brakPrognozy"));
+                showInfo(resourceBundle.getString("brakPrognozy"));
                 reset();
             }
         }
     }
 
-    public void showWeather() throws JSONException {
+    private void reset() {
+        updateButtonsAndTextField(false);
+        temperature.setText("");
+        desc.setText("");
+        pressure.setText("");
+        img.setImage(null);
+    }
+
+    private void showWeather() throws JSONException {
         weatherManager.fetchDataWeather();
         city.setText(weatherManager.getCity().toUpperCase());
         temperature.setText(weatherManager.getTemperature().toString() + "°C");
         desc.setText(weatherManager.getDescription().toUpperCase());
         img.setImage(new Image(ImagesTool.getImage(weatherManager.getIcon())));
         pressure.setText(weatherManager.getPressure() + " hPa");
-
     }
 
     private void showForecast() {
-
         weatherTool.weatherInTheSelectedCity();
         tomorrow.setText(weatherTool.getTomorrow());
         tomorrowDescription.setText(weatherTool.getTomorrowDescription());
@@ -128,21 +167,18 @@ public class Weather implements Initializable {
         dayDayDayAfter.setText((weatherTool.getDayDayDayAfter()));
         dayDayDayAfterDescription.setText(weatherTool.getDayDayDayAfterDescription());
 
-        img1.setImage(new Image("/images/" + weatherTool.getIconA() + ".png"));
-        img2.setImage(new Image("/images/" + weatherTool.getIconB() + ".png"));
-        img3.setImage(new Image("/images/" + weatherTool.getIconC() + ".png"));
-        img4.setImage(new Image("/images/" + weatherTool.getIconD() + ".png"));
+        setImageForecast();
     }
 
-    public void reset() {
-        bottomSet(false);
-        temperature.setText("");
-        desc.setText("");
-        pressure.setText("");
-        img.setImage(null);
+    private void setImageForecast() {
+        img1.setImage(new Image(ImagesTool.getImage(weatherTool.getIconA())));
+        img2.setImage(new Image(ImagesTool.getImage(weatherTool.getIconB())));
+        img3.setImage(new Image(ImagesTool.getImage(weatherTool.getIconC())));
+        img4.setImage(new Image(ImagesTool.getImage(weatherTool.getIconD())));
     }
 
-    private void showToast(String message) {
+
+    private void showInfo(String message) {
         errors.setText(message);
         errors.setTextFill(Color.RED);
         errors.setStyle("-fx-font-weight:bold;");
@@ -164,7 +200,7 @@ public class Weather implements Initializable {
         });
     }
 
-    public String setDayNames(String dzisiejszyDzien, ResourceBundle resourceBundle) {
+    private String setDayNames(String dzisiejszyDzien, ResourceBundle resourceBundle) {
         datas = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         switch (dzisiejszyDzien) {
@@ -186,71 +222,55 @@ public class Weather implements Initializable {
         return "brak";
     }
 
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        String name = new SimpleDateFormat("EEE", Locale.ENGLISH).format(new Date());
-        String nameDay = setDayNames(name, resourceBundle);
-        day.setText(nameDay);
-        this.resourceBundle = resourceBundle;
-        weatherManager = new WeatherManager(citySet, resourceBundle);
+    private void setVisibleButtonsAndDisableTextField() {
         weatherTool = new WeatherTool(citySet, resourceBundle);
-        weatherTool.fetchLocalApi();
-        if (weatherTool.getConnectionIsOpen()) {
-            weatherTool.weatherInYourRegion();
-            temperature1.setText(weatherTool.getTempToday() + "°C");
-            desc1.setText(weatherTool.getDescriptionToday().toUpperCase());
-            pressure1.setText(weatherTool.getPressureToday() + " hPa");
-            city1.setText(weatherTool.getCity().toUpperCase());
+        set.setVisible(false);
+        cancel.setVisible(false);
+        cityName.setDisable(true);
+    }
 
-            tomorrow1.setText(weatherTool.getTomorrow());
-            tomorrowDescription1.setText(weatherTool.getTomorrowDescription());
-            dayAfter1.setText(weatherTool.getDayAfter());
-            dayAfterDescription1.setText(weatherTool.getDayAfterDescription());
-            dayDayAfter1.setText(weatherTool.getDayDayAfter());
-            dayDayAfterDescription1.setText(weatherTool.getDayDayAfterDescription());
-            dayDayDayAfter1.setText(weatherTool.getDayDayDayAfter());
-            dayDayDayAfterDescription1.setText(weatherTool.getDayDayDayAfterDescription());
+    private void showErrorInfo() {
+        city.setStyle("-fx-text-fill:red;");
+        city.setTextFill(Color.RED);
+        city.setText(resourceBundle.getString("error"));
+        showInfo(resourceBundle.getString("brakInternetu"));
+        reset();
+        change.setDisable(true);
+        cityName.setText("");
+    }
 
-            img5.setImage(new Image("/images/" + weatherTool.getIcon0() + ".png"));
-            img6.setImage(new Image("/images/" + weatherTool.getIconA() + ".png"));
-            img7.setImage(new Image("/images/" + weatherTool.getIconB() + ".png"));
-            img8.setImage(new Image("/images/" + weatherTool.getIconC() + ".png"));
-            img9.setImage(new Image("/images/" + weatherTool.getIconD() + ".png"));
-        } else {
-            showToast(resourceBundle.getString("brakInternetu"));
-        }
-        if (!cityName.getText().equals("City Name") && !cityName.getText().equals("Nazwa miasta")) {
-            citySet = cityName.getText();
-            cityName.setText(citySet);
-            cityName.setDisable(true);
-            set.setVisible(false);
-            cancel.setVisible(false);
-            errors.setText("");
+    private void updateCityNameFieldAndButtons() {
+        citySet = cityName.getText();
+        cityName.setText(citySet);
+        cityName.setDisable(true);
+        set.setVisible(false);
+        cancel.setVisible(false);
+        errors.setText("");
+    }
 
-            try {
-                showWeather();
-                showForecast();
-            } catch (Exception e) {
-                city.setStyle("-fx-text-fill:red;");
-                city.setTextFill(Color.RED);
-                city.setText(resourceBundle.getString("error"));
-                showToast(resourceBundle.getString("brakInternetu"));
-                reset();
-                change.setDisable(true);
-                cityName.setText("");
-            }
-            cityName.setOnKeyPressed(e -> {
-                if (e.getCode() == KeyCode.ENTER) {
-                    setPressed();
-                }
-            });
+    private void showWeatherAndForecastInMyRegion() {
+        weatherTool.weatherInYourRegion();
+        temperature1.setText(weatherTool.getTempToday() + "°C");
+        desc1.setText(weatherTool.getDescriptionToday().toUpperCase());
+        pressure1.setText(weatherTool.getPressureToday() + " hPa");
+        city1.setText(weatherTool.getCity().toUpperCase());
 
-        } else {
-            weatherTool = new WeatherTool(citySet, resourceBundle);
-            set.setVisible(false);
-            cancel.setVisible(false);
-            cityName.setDisable(true);
-        }
+        tomorrow1.setText(weatherTool.getTomorrow());
+        tomorrowDescription1.setText(weatherTool.getTomorrowDescription());
+        dayAfter1.setText(weatherTool.getDayAfter());
+        dayAfterDescription1.setText(weatherTool.getDayAfterDescription());
+        dayDayAfter1.setText(weatherTool.getDayDayAfter());
+        dayDayAfterDescription1.setText(weatherTool.getDayDayAfterDescription());
+        dayDayDayAfter1.setText(weatherTool.getDayDayDayAfter());
+        dayDayDayAfterDescription1.setText(weatherTool.getDayDayDayAfterDescription());
+        setImageFromMyLocation();
+    }
+
+    private void setImageFromMyLocation() {
+        img5.setImage(new Image(ImagesTool.getImage(weatherTool.getIcon0())));
+        img6.setImage(new Image(ImagesTool.getImage(weatherTool.getIconA())));
+        img7.setImage(new Image(ImagesTool.getImage(weatherTool.getIconB())));
+        img8.setImage(new Image(ImagesTool.getImage(weatherTool.getIconC())));
+        img9.setImage(new Image(ImagesTool.getImage(weatherTool.getIconD())));
     }
 }
