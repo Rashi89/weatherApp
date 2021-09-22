@@ -17,6 +17,7 @@ import pl.agatarachanska.model.ImagesTool;
 import pl.agatarachanska.model.WeatherManager;
 import pl.agatarachanska.model.WeatherTool;
 
+import javax.xml.transform.Source;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -119,12 +120,12 @@ public class Weather implements Initializable {
     }
 
     private void onCityChange() {
-        city.setStyle("-fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db)");
+        city.setStyle("-fx-text-fill: white");
         if (cityName.getText().equals("")) {
             showInfo(resourceBundle.getString("blankCityName"));
         } else {
             try {
-                city.setStyle("-fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db)");
+                city.setStyle("-fx-text-fill: white");
                 this.citySet = cityName.getText().trim();
                 cityName.setText((citySet.trim()).toUpperCase());
                 weatherTool = new WeatherTool(citySet, resourceBundle);

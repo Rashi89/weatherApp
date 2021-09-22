@@ -30,7 +30,6 @@ public class WeatherManager {
     private ResourceBundle resourceBundle;
     private String language;
     private boolean unexpectErrors = false;
-    private Integer message;
 
     private static final String KEY_API = "a539a1d5b32e2518dfe9ca8abf12434c";
 
@@ -54,7 +53,6 @@ public class WeatherManager {
         try (InputStream inputStream = new URL(url).openStream()) {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
             String jsonText = read(bufferedReader);
-            System.out.println(jsonText);
             return new JSONObject(jsonText);
         }
     }

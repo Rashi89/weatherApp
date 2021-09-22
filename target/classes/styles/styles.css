@@ -1,6 +1,6 @@
 .box
 {
--fx-background-image: url("/images/pogoda.jpg");
+-fx-background-image: url("/images/bg_burza_2.jpg");
 -fx-background-size: cover;
 }
 .changebtn,.setbtn,.cancelbtn,.localbtn{
@@ -22,6 +22,9 @@
 -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #0987db, #53f5cf);
 -fx-text-fill:white;
 }
-.description{
--fx-text-fill:black;
+.firstLabel{
+-fx-background-color: #4ec6cc;
+}
+.firstLabelDay{
+;
 }

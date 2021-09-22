@@ -82,9 +82,10 @@ public class WeatherTool {
     }
 
     public void weatherInTheSelectedCity() {
+        downloadDataFromApi();
         String api = "http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(city, StandardCharsets.UTF_8) +
                 "&units=metric&mode=xml&lang=" + language + "&appid=a539a1d5b32e2518dfe9ca8abf12434c";
-        downloadDataFromApi();
+
         downloadDataWeatherFromAPI(api);
     }
 
@@ -159,7 +160,6 @@ public class WeatherTool {
                     try {
                         date = simpleDateFormat.parse(time);
                     } catch (ParseException e) {
-                        e.printStackTrace();
                         this.unexpectError = true;
                     }
                 }
