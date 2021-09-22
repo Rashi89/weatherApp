@@ -78,18 +78,27 @@ public class Weather implements Initializable {
         weatherManager = new WeatherManager(citySet, resourceBundle);
         weatherTool = new WeatherTool(citySet, resourceBundle);
         weatherTool.fetchLocalApi();
-        if (weatherTool.getConnectionIsOpen()) {
-            showWeatherAndForecastInMyRegion();
+        if(!weatherTool.getUnexpectError()){
+            if (weatherTool.getConnectionIsOpen()) {
+                showWeatherAndForecastInMyRegion();
+                if(weatherTool.getUnexpectError()){
+                    showInfo(resourceBundle.getString("unexpectError"));
+                    change.setDisable(true);
+                }
+            } else {
+                showInfo(resourceBundle.getString("brakInternetu"));
+            }
         } else {
-            showInfo(resourceBundle.getString("brakInternetu"));
+            showInfo(resourceBundle.getString("unexpectError"));
         }
+
         if (!cityName.getText().equals("City Name") && !cityName.getText().equals("Nazwa miasta")) {
             updateCityNameFieldAndButtons();
             try {
                 showWeather();
                 showForecast();
             } catch (Exception e) {
-                showErrorInfo();
+                showInfo(resourceBundle.getString("unexpectError"));
             }
         } else {
             setVisibleButtonsAndDisableTextField();
@@ -146,12 +155,27 @@ public class Weather implements Initializable {
         desc.setText("");
         pressure.setText("");
         img.setImage(null);
+        tomorrow.setText("");
+        tomorrowDescription.setText("");
+        img1.setImage(null);
+        dayAfter.setText("");
+        dayAfterDescription.setText("");
+        img2.setImage(null);
+        dayDayAfter.setText("");
+        dayDayAfterDescription.setText("");
+        img3.setImage(null);
+        dayDayDayAfter.setText("");
+        dayDayDayAfterDescription.setText("");
+        img4.setImage(null);
     }
 
     private void showWeather() throws JSONException {
         weatherManager.fetchDataWeather();
-        setCityTemperatureDescriptionPressureImageInSetCityField();
-
+        if(weatherManager.getUnexpectErrors()){
+            showInfo(resourceBundle.getString("unexpectError"));
+        } else {
+            setCityTemperatureDescriptionPressureImageInSetCityField();
+        }
     }
 
     private void setCityTemperatureDescriptionPressureImageInSetCityField() {
@@ -164,8 +188,13 @@ public class Weather implements Initializable {
 
     private void showForecast() {
         weatherTool.weatherInTheSelectedCity();
-        showForecastDataAndDescription(tomorrow, tomorrowDescription, dayAfter, dayAfterDescription, dayDayAfter, dayDayAfterDescription, dayDayDayAfter, dayDayDayAfterDescription);
-        setImageForecast();
+        if(weatherTool.getUnexpectError()){
+            showInfo(resourceBundle.getString("unexpectError"));
+        } else {
+            showForecastDataAndDescription(tomorrow, tomorrowDescription, dayAfter, dayAfterDescription, dayDayAfter, dayDayAfterDescription, dayDayDayAfter, dayDayDayAfterDescription);
+            setImageForecast();
+        }
+
     }
 
     private void setImageForecast() {
@@ -246,10 +275,12 @@ public class Weather implements Initializable {
 
     private void showWeatherAndForecastInMyRegion() {
         weatherTool.weatherInYourRegion();
-        setTemperatureDescriptionPressureAndCityInMainMyRegion();
+        if(!weatherTool.getUnexpectError()) {
+            setTemperatureDescriptionPressureAndCityInMainMyRegion();
 
-        showForecastDataAndDescription(tomorrow1, tomorrowDescription1, dayAfter1, dayAfterDescription1, dayDayAfter1, dayDayAfterDescription1, dayDayDayAfter1, dayDayDayAfterDescription1);
-        setImageFromMyLocation();
+            showForecastDataAndDescription(tomorrow1, tomorrowDescription1, dayAfter1, dayAfterDescription1, dayDayAfter1, dayDayAfterDescription1, dayDayDayAfter1, dayDayDayAfterDescription1);
+            setImageFromMyLocation();
+        }
     }
 
     private void setTemperatureDescriptionPressureAndCityInMainMyRegion() {

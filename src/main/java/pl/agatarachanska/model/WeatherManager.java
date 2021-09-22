@@ -29,6 +29,8 @@ public class WeatherManager {
     private String moisture;
     private ResourceBundle resourceBundle;
     private String language;
+    private boolean unexpectErrors = false;
+    private Integer message;
 
     private static final String KEY_API = "a539a1d5b32e2518dfe9ca8abf12434c";
 
@@ -52,6 +54,7 @@ public class WeatherManager {
         try (InputStream inputStream = new URL(url).openStream()) {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
             String jsonText = read(bufferedReader);
+            System.out.println(jsonText);
             return new JSONObject(jsonText);
         }
     }
@@ -60,10 +63,13 @@ public class WeatherManager {
 
         JSONObject json;
         JSONObject jsonDetails;
+
         try {
             json = readJsonFromURL("http://api.openweathermap.org/data/2.5/weather?q=" + URLEncoder.encode(city, StandardCharsets.UTF_8) + "&appid=" + KEY_API + "&lang=" + language + "&units=metric");
-
-        } catch (IOException | JSONException e) {
+        } catch (JSONException  e) {
+            unexpectErrors = true;
+            return;
+        } catch (IOException e){
             return;
         }
 
@@ -140,5 +146,9 @@ public class WeatherManager {
 
     public String getMoisture() {
         return moisture;
+    }
+
+    public boolean getUnexpectErrors() {
+        return unexpectErrors;
     }
 }

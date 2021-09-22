@@ -54,6 +54,7 @@ public class WeatherTool {
     private String dayDayAfterDescription;
     private String dayDayDayAfterDescription;
     private boolean connectionIsOpen;
+    private boolean unexpectError = false;
 
     public WeatherTool(String city, ResourceBundle resourceBundle) {
         this.city = city;
@@ -69,7 +70,7 @@ public class WeatherTool {
         } catch (UnknownHostException | MalformedURLException e) {
             this.connectionIsOpen = false;
         } catch (IOException e) {
-            e.printStackTrace();
+            this.unexpectError = true;
         }
     }
 
@@ -113,9 +114,9 @@ public class WeatherTool {
             }
             reader.close();
         } catch (XMLStreamException e) {
-            e.printStackTrace();
+            this.unexpectError = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            this.unexpectError = true;
         }
     }
 
@@ -129,11 +130,13 @@ public class WeatherTool {
             reader.next();
             readDataFromXML(reader);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            this.unexpectError = true;
         } catch (IOException e) {
-            e.printStackTrace();
+            this.unexpectError = true;
         } catch (XMLStreamException e) {
-            e.printStackTrace();
+            this.unexpectError = true;
+        } catch (NullPointerException e){
+            this.unexpectError = true;
         }
         setTheWeatherAndForecastFor4Days();
     }
@@ -157,6 +160,7 @@ public class WeatherTool {
                         date = simpleDateFormat.parse(time);
                     } catch (ParseException e) {
                         e.printStackTrace();
+                        this.unexpectError = true;
                     }
                 }
                 if (element.equals("pressure")) {
@@ -381,5 +385,8 @@ public class WeatherTool {
 
     public boolean getConnectionIsOpen() {
         return connectionIsOpen;
+    }
+    public  boolean getUnexpectError(){
+        return unexpectError;
     }
 }
