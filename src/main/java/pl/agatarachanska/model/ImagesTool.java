@@ -44,6 +44,7 @@ public class ImagesTool {
                 return "/images/icon.png";
         }
     }
+
     public static String getBackground(String icon) {
 
         switch (icon) {

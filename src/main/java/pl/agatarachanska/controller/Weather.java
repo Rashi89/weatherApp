@@ -16,6 +16,7 @@ import org.json.JSONException;
 import pl.agatarachanska.model.ImagesTool;
 import pl.agatarachanska.model.WeatherManager;
 import pl.agatarachanska.model.WeatherTool;
+
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -80,11 +81,11 @@ public class Weather implements Initializable {
         weatherManager = new WeatherManager(citySet, resourceBundle);
         weatherTool = new WeatherTool(citySet, resourceBundle);
         weatherTool.fetchLocalApi();
-        if(!weatherTool.getUnexpectError()){
+        if (!weatherTool.getUnexpectError()) {
             if (weatherTool.getConnectionIsOpen()) {
 
                 showWeatherAndForecastInMyRegion();
-                if(weatherTool.getUnexpectError()){
+                if (weatherTool.getUnexpectError()) {
                     showInfo(resourceBundle.getString("unexpectError"));
                     change.setDisable(true);
                 }
@@ -125,7 +126,9 @@ public class Weather implements Initializable {
         city.setStyle("-fx-text-fill: white");
         if (cityName.getText().equals("")) {
             showInfo(resourceBundle.getString("blankCityName"));
-        } else {
+        } else if (!gaveANumber(cityName.getText())) {
+            showInfo(resourceBundle.getString("noNumber"));
+        } else if (gaveANumber(cityName.getText())) {
             try {
                 city.setStyle("-fx-text-fill: white");
                 this.citySet = cityName.getText().trim();
@@ -152,6 +155,17 @@ public class Weather implements Initializable {
         }
     }
 
+    private boolean gaveANumber(String text) {
+        Integer textLenght = text.length();
+
+        for (int i = 0; i < textLenght; i++) {
+            if ((int) text.charAt(i) >= 48 && (int) text.charAt(i) <= 57) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void reset() {
         updateButtonsAndTextField(false);
         temperature.setText("");
@@ -174,7 +188,7 @@ public class Weather implements Initializable {
 
     private void showWeather() throws JSONException {
         weatherManager.fetchDataWeather();
-        if(weatherManager.getUnexpectErrors()){
+        if (weatherManager.getUnexpectErrors()) {
             showInfo(resourceBundle.getString("unexpectError"));
         } else {
             setCityTemperatureDescriptionPressureImageInSetCityField();
@@ -191,7 +205,7 @@ public class Weather implements Initializable {
 
     private void showForecast() {
         weatherTool.weatherInTheSelectedCity();
-        if(weatherTool.getUnexpectError()){
+        if (weatherTool.getUnexpectError()) {
             showInfo(resourceBundle.getString("unexpectError"));
         } else {
             showForecastDataAndDescription(tomorrow, tomorrowDescription, dayAfter, dayAfterDescription, dayDayAfter, dayDayAfterDescription, dayDayDayAfter, dayDayDayAfterDescription);
@@ -206,7 +220,7 @@ public class Weather implements Initializable {
         img3.setImage(new Image(ImagesTool.getImage(weatherTool.getIconC())));
         img4.setImage(new Image(ImagesTool.getImage(weatherTool.getIconD())));
     }
-    
+
     private void showInfo(String message) {
         errors.setText(message);
         errors.setTextFill(Color.RED);
@@ -278,7 +292,7 @@ public class Weather implements Initializable {
 
     private void showWeatherAndForecastInMyRegion() {
         weatherTool.weatherInYourRegion();
-        if(!weatherTool.getUnexpectError()) {
+        if (!weatherTool.getUnexpectError()) {
             setTemperatureDescriptionPressureAndCityInMainMyRegion();
 
             showForecastDataAndDescription(tomorrow1, tomorrowDescription1, dayAfter1, dayAfterDescription1, dayDayAfter1, dayDayAfterDescription1, dayDayDayAfter1, dayDayDayAfterDescription1);
@@ -310,6 +324,6 @@ public class Weather implements Initializable {
         img7.setImage(new Image(ImagesTool.getImage(weatherTool.getIconB())));
         img8.setImage(new Image(ImagesTool.getImage(weatherTool.getIconC())));
         img9.setImage(new Image(ImagesTool.getImage(weatherTool.getIconD())));
-        window.setStyle("-fx-background-image: url("+ImagesTool.getBackground(weatherTool.getIcon0())+");");
+        window.setStyle("-fx-background-image: url(" + ImagesTool.getBackground(weatherTool.getIcon0()) + ");");
     }
 }

@@ -2,6 +2,7 @@ package pl.agatarachanska.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -60,10 +61,10 @@ public class WeatherManager {
 
         try {
             json = readJsonFromURL("http://api.openweathermap.org/data/2.5/weather?q=" + URLEncoder.encode(city, StandardCharsets.UTF_8) + "&appid=" + KEY_API + "&lang=" + language + "&units=metric");
-        } catch (JSONException  e) {
+        } catch (JSONException e) {
             unexpectErrors = true;
             return;
-        } catch (IOException e){
+        } catch (IOException e) {
             return;
         }
 

@@ -136,7 +136,7 @@ public class WeatherTool {
             this.unexpectError = true;
         } catch (XMLStreamException e) {
             this.unexpectError = true;
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             this.unexpectError = true;
         }
         setTheWeatherAndForecastFor4Days();
@@ -285,7 +285,7 @@ public class WeatherTool {
     }
 
     private void todayWeather(List<String> forecast, List<Forecast> forecasts, int fetchDataFromArray) {
-        String temperature =forecast.get(0);
+        String temperature = forecast.get(0);
         String[] parts = temperature.split(Pattern.quote("."));
         this.tempToday = parts[0];
         this.pressureToday = forecasts.get(fetchDataFromArray).pressure;
@@ -387,7 +387,7 @@ public class WeatherTool {
         return connectionIsOpen;
     }
 
-    public  boolean getUnexpectError(){
+    public boolean getUnexpectError() {
         return unexpectError;
     }
 }
