@@ -1,6 +1,6 @@
 .box
 {
--fx-background-image: url("/images/bg_burza_2.jpg");
+
 -fx-background-size: cover;
 }
 .changebtn,.setbtn,.cancelbtn,.localbtn{

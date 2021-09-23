@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.json.JSONException;
@@ -28,6 +29,9 @@ public class Weather implements Initializable {
     private WeatherManager weatherManager;
     private WeatherTool weatherTool;
     private Date datas;
+
+    @FXML
+    private AnchorPane window;
 
     @FXML
     private Label city, city1, day, temperature, temperature1, pressure, pressure1, tomorrow, tomorrow1, dayAfter,
@@ -78,6 +82,7 @@ public class Weather implements Initializable {
         weatherTool.fetchLocalApi();
         if(!weatherTool.getUnexpectError()){
             if (weatherTool.getConnectionIsOpen()) {
+
                 showWeatherAndForecastInMyRegion();
                 if(weatherTool.getUnexpectError()){
                     showInfo(resourceBundle.getString("unexpectError"));
@@ -305,5 +310,6 @@ public class Weather implements Initializable {
         img7.setImage(new Image(ImagesTool.getImage(weatherTool.getIconB())));
         img8.setImage(new Image(ImagesTool.getImage(weatherTool.getIconC())));
         img9.setImage(new Image(ImagesTool.getImage(weatherTool.getIconD())));
+        window.setStyle("-fx-background-image: url("+ImagesTool.getBackground(weatherTool.getIcon0())+");");
     }
 }
