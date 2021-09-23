@@ -386,6 +386,7 @@ public class WeatherTool {
     public boolean getConnectionIsOpen() {
         return connectionIsOpen;
     }
+
     public  boolean getUnexpectError(){
         return unexpectError;
     }

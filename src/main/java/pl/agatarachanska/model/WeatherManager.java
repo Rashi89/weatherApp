@@ -2,21 +2,17 @@ package pl.agatarachanska.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class WeatherManager {
-
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("EEEE", Locale.ENGLISH);
     private final String city;
 
     private String day;
@@ -114,10 +110,6 @@ public class WeatherManager {
         return city;
     }
 
-    public String getDay() {
-        return day;
-    }
-
     public Integer getTemperature() {
         return temperature;
     }
@@ -130,20 +122,8 @@ public class WeatherManager {
         return description;
     }
 
-    public String getWindSpeed() {
-        return windSpeed;
-    }
-
-    public String getCloud() {
-        return cloudy;
-    }
-
     public String getPressure() {
         return pressure;
-    }
-
-    public String getMoisture() {
-        return moisture;
     }
 
     public boolean getUnexpectErrors() {

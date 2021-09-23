@@ -9,15 +9,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.json.JSONException;
 import pl.agatarachanska.model.ImagesTool;
 import pl.agatarachanska.model.WeatherManager;
 import pl.agatarachanska.model.WeatherTool;
-
-import javax.xml.transform.Source;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
