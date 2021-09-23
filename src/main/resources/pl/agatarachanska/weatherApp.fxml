@@ -60,7 +60,7 @@
                                 </Label>
                                 <Label fx:id="temperature" alignment="CENTER" layoutX="47.0" layoutY="32.0" prefHeight="46.0" prefWidth="80.0" textFill="WHITE" AnchorPane.leftAnchor="47.0">
                                     <font>
-                                        <Font name="Lato Black" size="18.0" />
+                                        <Font name="Lato Black" size="24.0" />
                                     </font>
                                 </Label>
                                 <ImageView fx:id="img" fitHeight="80.0" fitWidth="80.0" layoutX="383.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
@@ -87,7 +87,7 @@
                                         <RowConstraints maxHeight="66.6" minHeight="10.0" prefHeight="34.39998779296876" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <TextField fx:id="cityName" alignment="CENTER" prefHeight="26.0" prefWidth="112.0" style="-fx-border-color: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db); -fx-border-width: 3;" text="%cityName" GridPane.columnIndex="2">
+                                        <TextField fx:id="cityName" alignment="CENTER" prefHeight="26.0" prefWidth="112.0" styleClass="textField" text="%cityName" GridPane.columnIndex="2">
                                             <font>
                                                 <Font name="Lato Black" size="15.0" />
                                             </font>
@@ -244,7 +244,7 @@
                                 </Label>
                                 <Label fx:id="temperature1" alignment="CENTER" layoutX="47.0" layoutY="32.0" prefHeight="46.0" prefWidth="80.0" textFill="WHITE" AnchorPane.leftAnchor="47.0">
                                     <font>
-                                        <Font name="Lato Black" size="18.0" />
+                                        <Font name="Lato Black" size="24.0" />
                                     </font>
                                 </Label>
                                 <ImageView fx:id="img5" fitHeight="80.0" fitWidth="80.0" layoutX="383.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />

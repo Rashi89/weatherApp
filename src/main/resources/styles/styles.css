@@ -4,23 +4,35 @@
 -fx-background-size: cover;
 }
 .changebtn,.setbtn,.cancelbtn,.localbtn{
--fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db);
+-fx-background-color: linear-gradient(to right, #b9eff0,#5ba8a9);
+-fx-background-radius:20;
+-fx-text-fill:#1e3966;
 
 }
 .changebtn:hover,.localbtn:hover{
 -fx-font-family:'Lato Black';
--fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #0987db, #53f5cf);
--fx-text-fill:white;
+-fx-background-color: linear-gradient(to left, #b9eff0,#5ba8a9);
+-fx-text-fill:#1e3966;
+-fx-font-size:14px;
 }
 .setbtn:hover{
 -fx-font-family:'Lato Black';
--fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #0987db, #53f5cf);
--fx-text-fill:white;
+-fx-background-color: linear-gradient(to left, #b9eff0,#5ba8a9);
+-fx-text-fill:#1e3966;
+-fx-font-size:14px;
 }
 .cancelbtn:hover{
 -fx-font-family:'Lato Black';
--fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #0987db, #53f5cf);
--fx-text-fill:white;
+-fx-background-color: linear-gradient(to left, #b9eff0,#5ba8a9);
+-fx-text-fill:#1e3966;
+-fx-font-size:14px;
+}
+.textField{
+-fx-text-fill:#1e3966;
+-fx-text-box-border: transparent;
+}
+.textField:focused{
+-fx-focus-color: transparent;
 }
 .firstLabel{
 -fx-background-color: #4ec6cc;
