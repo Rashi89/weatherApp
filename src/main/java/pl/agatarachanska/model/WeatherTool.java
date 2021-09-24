@@ -177,7 +177,7 @@ public class WeatherTool {
         }
     }
 
-    private void setTheWeatherAndForecastFor4Days(List<String> forecast,List<Forecast> forecasts) {
+    private void setTheWeatherAndForecastFor4Days(List<String> forecast, List<Forecast> forecasts) {
         if (forecast.isEmpty()) {
             forecast.add("0");
             forecasts.add(new Forecast(temp, sym, descript, clock, press));
@@ -296,19 +296,19 @@ public class WeatherTool {
     private String dayName(String name) {
         switch (name) {
             case "Mon ":
-                return resourceBundle.getString("poniedzialek").substring(0, 2) + ".";
+                return resourceBundle.getString("poniedzialekSkrot");
             case "Tue ":
-                return resourceBundle.getString("wtorek").substring(0, 2) + ".";
+                return resourceBundle.getString("wtorekSkrot");
             case "Wed ":
-                return resourceBundle.getString("sroda").substring(0, 2) + ".";
+                return resourceBundle.getString("srodaSkrot");
             case "Thu ":
-                return resourceBundle.getString("czwartek").substring(0, 2) + ".";
+                return resourceBundle.getString("czwartekSkrot");
             case "Fri ":
-                return resourceBundle.getString("piatek").substring(0, 2) + ".";
+                return resourceBundle.getString("piatekSkrot");
             case "Sat ":
-                return resourceBundle.getString("sobota").substring(0, 2) + ".";
+                return resourceBundle.getString("sobotaSkrot");
             case "Sun ":
-                return resourceBundle.getString("niedziela").substring(0, 2) + ".";
+                return resourceBundle.getString("niedzielaSkrot");
             default:
                 return "";
         }
