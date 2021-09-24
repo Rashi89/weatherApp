@@ -3,7 +3,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.MotionBlur?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,17 +15,15 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1000.0" styleClass="box" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.agatarachanska.controller.Weather">
+<AnchorPane fx:id="window" prefHeight="750.0" prefWidth="1000.0" styleClass="box" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.agatarachanska.controller.Weather">
     <children>
         <AnchorPane prefHeight="35.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
-                <Label fx:id="day" alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="1000.0" style="-fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db);" text="day" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <AnchorPane opacity="0.65" prefHeight="46.0" prefWidth="1000.0" styleClass="firstLabel" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                <Label fx:id="day" alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="1000.0" style="-fx-opacity: 1;" styleClass="firstLabelDay" text="day" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <font>
-                        <Font name="Lato Black" size="24.0" />
+                        <Font name="Lato Medium" size="24.0" />
                     </font>
-                    <effect>
-                        <DropShadow />
-                    </effect>
                 </Label>
             </children>
         </AnchorPane>
@@ -31,17 +31,20 @@
             <children>
                 <AnchorPane prefHeight="701.0" prefWidth="500.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label fx:id="city" alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="500.0" style="-fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db);" text="%city" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                        <Label fx:id="city" alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="500.0" text="%city" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                             <font>
                                 <Font name="Lato Black" size="36.0" />
                             </font>
                             <effect>
-                                <DropShadow />
+                                <DropShadow>
+                           <color>
+                              <Color red="0.250980406999588" green="0.4470588266849518" blue="0.5686274766921997" />
+                           </color></DropShadow>
                             </effect>
                         </Label>
                         <AnchorPane layoutY="84.0" prefHeight="108.0" prefWidth="542.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="83.0">
                             <children>
-                                <AnchorPane opacity="0.19" prefHeight="108.0" prefWidth="502.0" style="-fx-background-color: #63d0f7;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
+                                <AnchorPane opacity="0.19" prefHeight="108.0" prefWidth="502.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
                                     <effect>
                                         <DropShadow height="24.8" radius="12.850000000000001" spread="0.16" width="28.6">
                                             <color>
@@ -50,18 +53,18 @@
                                         </DropShadow>
                                     </effect>
                                 </AnchorPane>
-                                <Label fx:id="desc" alignment="CENTER" layoutX="115.0" layoutY="26.0" prefHeight="27.0" prefWidth="253.0" style="-fx-text-fill: black;" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="134.0">
+                                <Label fx:id="desc" alignment="CENTER" layoutX="115.0" layoutY="26.0" prefHeight="27.0" prefWidth="253.0" textFill="WHITE" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="134.0">
                                     <font>
                                         <Font name="Lato Black" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="temperature" alignment="CENTER" layoutX="47.0" layoutY="32.0" prefHeight="46.0" prefWidth="80.0" style="-fx-text-fill: black;" AnchorPane.leftAnchor="47.0">
+                                <Label fx:id="temperature" alignment="CENTER" layoutX="47.0" layoutY="32.0" prefHeight="46.0" prefWidth="80.0" textFill="WHITE" AnchorPane.leftAnchor="47.0">
                                     <font>
-                                        <Font name="Lato Black" size="18.0" />
+                                        <Font name="Lato Black" size="24.0" />
                                     </font>
                                 </Label>
                                 <ImageView fx:id="img" fitHeight="80.0" fitWidth="80.0" layoutX="383.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                <Label fx:id="pressure" alignment="CENTER" layoutX="165.0" layoutY="55.0" prefHeight="27.0" prefWidth="159.0" style="-fx-text-fill: black;" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="178.0">
+                                <Label fx:id="pressure" alignment="CENTER" layoutX="165.0" layoutY="55.0" prefHeight="27.0" prefWidth="159.0" textFill="WHITE" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="178.0">
                                     <font>
                                         <Font name="Lato Black" size="18.0" />
                                     </font>
@@ -84,26 +87,26 @@
                                         <RowConstraints maxHeight="66.6" minHeight="10.0" prefHeight="34.39998779296876" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <TextField fx:id="cityName" alignment="CENTER" prefHeight="26.0" prefWidth="112.0" style="-fx-border-color: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db); -fx-border-width: 3;" text="%cityName" GridPane.columnIndex="2">
+                                        <TextField fx:id="cityName" alignment="CENTER" prefHeight="26.0" prefWidth="112.0" styleClass="textField" text="%cityName" GridPane.columnIndex="2">
                                             <font>
                                                 <Font name="Lato Black" size="15.0" />
                                             </font>
                                         </TextField>
-                                        <Button fx:id="change" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicks" prefHeight="35.0" prefWidth="145.0" styleClass="changebtn" text="%zmien" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                        <Button fx:id="change" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonChange" prefHeight="35.0" prefWidth="145.0" styleClass="changebtn" text="%zmien" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                             <font>
                                                 <Font name="Lato Black" size="14.0" />
                                             </font>
                                             <effect>
                                                 <DropShadow />
                                             </effect></Button>
-                                        <Button fx:id="set" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicks" prefHeight="35.0" prefWidth="145.0" styleClass="setbtn" text="%ustaw" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <Button fx:id="set" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonSet" prefHeight="35.0" prefWidth="145.0" styleClass="setbtn" text="%ustaw" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                             <font>
                                                 <Font name="Lato Black" size="14.0" />
                                             </font>
                                             <effect>
                                                 <DropShadow />
                                             </effect></Button>
-                                        <Button fx:id="cancel" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicks" prefHeight="35.0" prefWidth="145.0" styleClass="cancelbtn" text="%anuluj" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                        <Button fx:id="cancel" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonCancel" prefHeight="35.0" prefWidth="145.0" styleClass="cancelbtn" text="%anuluj" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                             <font>
                                                 <Font name="Lato Black" size="14.0" />
                                             </font>
@@ -117,24 +120,55 @@
                         <Label fx:id="errors" layoutX="47.0" layoutY="661.0" prefHeight="34.0" prefWidth="314.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="47.0" />
                         <AnchorPane layoutY="192.0" prefHeight="352.0" prefWidth="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
                             <children>
-                                <AnchorPane opacity="0.32" prefHeight="354.0" prefWidth="500.0" style="-fx-background-color: #63d0f7;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
-                                    <effect>
-                                        <DropShadow height="40.0" radius="19.5" width="40.0">
-                                            <color>
-                                                <Color green="0.21666666865348816" blue="1.0" opacity="0.2689655125141144" />
-                                            </color>
-                                        </DropShadow>
-                                    </effect>
+                                <AnchorPane prefHeight="354.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutY="15.0" opacity="0.33" prefHeight="80.0" prefWidth="479.0" style="-fx-background-color: #5f879c;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+                                 <effect>
+                                    <MotionBlur angle="126.86" radius="0.0">
+                                       <input>
+                                          <ColorAdjust brightness="-0.44" contrast="0.78" saturation="-0.28" />
+                                       </input>
+                                    </MotionBlur>
+                                 </effect>
+                              </AnchorPane>
+                              <AnchorPane layoutY="95.0" opacity="0.33" prefHeight="80.0" prefWidth="460.0" style="-fx-background-color: #2c5970;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <effect>
+                                    <MotionBlur angle="126.86" radius="0.0">
+                                       <input>
+                                          <ColorAdjust brightness="-0.3" contrast="-0.46" saturation="1.0" />
+                                       </input>
+                                    </MotionBlur>
+                                 </effect>
+                              </AnchorPane>
+                              <AnchorPane layoutY="175.0" opacity="0.33" prefHeight="80.0" prefWidth="460.0" style="-fx-background-color: #133d53;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <effect>
+                                    <MotionBlur angle="126.86" radius="0.0">
+                                       <input>
+                                          <ColorAdjust brightness="-0.51" contrast="0.22" saturation="1.0" />
+                                       </input>
+                                    </MotionBlur>
+                                 </effect>
+                              </AnchorPane>
+                              <AnchorPane layoutY="255.0" opacity="0.33" prefHeight="80.0" prefWidth="460.0" style="-fx-background-color: #021f2e;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <effect>
+                                    <MotionBlur angle="126.86" radius="0.0">
+                                       <input>
+                                          <ColorAdjust brightness="-1.0" contrast="1.0" hue="1.0" saturation="1.0" />
+                                       </input>
+                                    </MotionBlur>
+                                 </effect>
+                              </AnchorPane>
+                           </children>
                                 </AnchorPane>
-                                <AnchorPane layoutY="15.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                <AnchorPane layoutY="15.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
                                     <children>
-                                        <Label fx:id="tomorrow" layoutX="46.0" layoutY="7.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+                                        <Label fx:id="tomorrow" layoutX="46.0" layoutY="7.0" prefHeight="34.0" prefWidth="323.0" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                         <ImageView fx:id="img1" fitHeight="80.0" fitWidth="80.0" layoutX="394.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                        <Label fx:id="tomorrowDescription" layoutX="47.0" layoutY="40.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                        <Label fx:id="tomorrowDescription" layoutX="47.0" layoutY="40.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
@@ -143,43 +177,43 @@
                                 </AnchorPane>
                                 <AnchorPane layoutY="95.0" prefHeight="80.0" prefWidth="498.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <Label fx:id="dayAfter" layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+                                        <Label fx:id="dayAfter" layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="323.0" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                         <ImageView fx:id="img2" fitHeight="80.0" fitWidth="80.0" layoutX="378.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                        <Label fx:id="dayAfterDescription" layoutX="46.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" wrapText="true" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                        <Label fx:id="dayAfterDescription" layoutX="46.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane layoutY="257.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                <AnchorPane layoutY="255.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <Label fx:id="dayDayDayAfter" layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+                                        <Label fx:id="dayDayDayAfter" layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="323.0" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                         <ImageView fx:id="img4" fitHeight="80.0" fitWidth="80.0" layoutX="400.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                        <Label fx:id="dayDayDayAfterDescription" layoutX="47.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                        <Label fx:id="dayDayDayAfterDescription" layoutX="47.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane layoutY="176.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                <AnchorPane layoutY="175.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <Label fx:id="dayDayAfter" layoutX="47.0" layoutY="8.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+                                        <Label fx:id="dayDayAfter" layoutX="47.0" layoutY="8.0" prefHeight="34.0" prefWidth="323.0" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                         <ImageView fx:id="img3" fitHeight="80.0" fitWidth="80.0" layoutX="356.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                        <Label fx:id="dayDayAfterDescription" layoutX="47.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                        <Label fx:id="dayDayAfterDescription" layoutX="47.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
@@ -194,7 +228,7 @@
                     <children>
                         <AnchorPane layoutX="7.0" layoutY="83.0" prefHeight="108.0" prefWidth="542.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="83.0">
                             <children>
-                                <AnchorPane opacity="0.19" prefHeight="108.0" prefWidth="502.0" style="-fx-background-color: #63d0f7;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
+                                <AnchorPane opacity="0.19" prefHeight="108.0" prefWidth="502.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
                                     <effect>
                                         <DropShadow height="24.8" radius="12.850000000000001" spread="0.16" width="28.6">
                                             <color>
@@ -203,52 +237,86 @@
                                         </DropShadow>
                                     </effect>
                                 </AnchorPane>
-                                <Label fx:id="desc1" alignment="CENTER" layoutX="115.0" layoutY="26.0" prefHeight="27.0" prefWidth="253.0" style="-fx-text-fill: black;" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="134.0">
+                                <Label fx:id="desc1" alignment="CENTER" layoutX="115.0" layoutY="26.0" prefHeight="27.0" prefWidth="253.0" textFill="WHITE" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="134.0">
                                     <font>
                                         <Font name="Lato Black" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="temperature1" alignment="CENTER" layoutX="47.0" layoutY="32.0" prefHeight="46.0" prefWidth="80.0" style="-fx-text-fill: black;" AnchorPane.leftAnchor="47.0">
+                                <Label fx:id="temperature1" alignment="CENTER" layoutX="47.0" layoutY="32.0" prefHeight="46.0" prefWidth="80.0" textFill="WHITE" AnchorPane.leftAnchor="47.0">
                                     <font>
-                                        <Font name="Lato Black" size="18.0" />
+                                        <Font name="Lato Black" size="24.0" />
                                     </font>
                                 </Label>
                                 <ImageView fx:id="img5" fitHeight="80.0" fitWidth="80.0" layoutX="383.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                <Label fx:id="pressure1" alignment="CENTER" layoutX="165.0" layoutY="55.0" prefHeight="27.0" prefWidth="159.0" style="-fx-text-fill: black;" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="178.0">
+                                <Label fx:id="pressure1" alignment="CENTER" layoutX="165.0" layoutY="55.0" prefHeight="27.0" prefWidth="159.0" textFill="WHITE" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="178.0">
                                     <font>
                                         <Font name="Lato Black" size="18.0" />
                                     </font>
                                 </Label>
                             </children>
                         </AnchorPane>
-                        <Label fx:id="city1" alignment="CENTER" prefHeight="46.0" prefWidth="500.0" style="-fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #53f5cf, #0987db);" text="%your_city" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                        <Label fx:id="city1" alignment="CENTER" prefHeight="46.0" prefWidth="500.0" text="%your_city" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                             <font>
                                 <Font name="Lato Black" size="36.0" />
                             </font>
                             <effect>
-                                <DropShadow />
+                                <DropShadow>
+                           <color>
+                              <Color red="0.250980406999588" green="0.4470588266849518" blue="0.5686274766921997" />
+                           </color></DropShadow>
                             </effect>
                         </Label>
                         <AnchorPane layoutY="191.0" prefHeight="352.0" prefWidth="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
                             <children>
-                                <AnchorPane opacity="0.32" prefHeight="354.0" prefWidth="500.0" style="-fx-background-color: #63d0f7;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
-                                    <effect>
-                                        <DropShadow height="40.0" radius="19.5" width="40.0">
-                                            <color>
-                                                <Color green="0.21666666865348816" blue="1.0" opacity="0.2689655125141144" />
-                                            </color>
-                                        </DropShadow>
-                                    </effect>
+                                <AnchorPane prefHeight="354.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutY="15.0" opacity="0.33" prefHeight="80.0" prefWidth="460.0" style="-fx-background-color: #5f879c;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+                                 <effect>
+                                    <MotionBlur angle="126.86" radius="0.0">
+                                       <input>
+                                          <ColorAdjust brightness="-0.44" contrast="0.78" saturation="-0.28" />
+                                       </input>
+                                    </MotionBlur>
+                                 </effect>
+                              </AnchorPane>
+                              <AnchorPane layoutY="95.0" opacity="0.33" prefHeight="80.0" prefWidth="460.0" style="-fx-background-color: #2c5970;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <effect>
+                                    <MotionBlur angle="126.86" radius="0.0">
+                                       <input>
+                                          <ColorAdjust brightness="-0.3" contrast="-0.46" saturation="1.0" />
+                                       </input>
+                                    </MotionBlur>
+                                 </effect>
+                              </AnchorPane>
+                              <AnchorPane layoutY="175.0" opacity="0.33" prefHeight="80.0" prefWidth="460.0" style="-fx-background-color: #133d53;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <effect>
+                                    <MotionBlur angle="126.86" radius="0.0">
+                                       <input>
+                                          <ColorAdjust brightness="-0.51" contrast="0.22" saturation="1.0" />
+                                       </input>
+                                    </MotionBlur>
+                                 </effect>
+                              </AnchorPane>
+                              <AnchorPane layoutY="255.0" opacity="0.33" prefHeight="80.0" prefWidth="460.0" style="-fx-background-color: #021f2e;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <effect>
+                                    <MotionBlur angle="126.86" radius="0.0">
+                                       <input>
+                                          <ColorAdjust brightness="-1.0" contrast="1.0" hue="1.0" saturation="1.0" />
+                                       </input>
+                                    </MotionBlur>
+                                 </effect>
+                              </AnchorPane>
+                           </children>
                                 </AnchorPane>
-                                <AnchorPane layoutY="15.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                <AnchorPane layoutY="15.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
                                     <children>
-                                        <Label fx:id="tomorrow1" layoutX="46.0" layoutY="7.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+                                        <Label fx:id="tomorrow1" layoutX="46.0" layoutY="7.0" prefHeight="34.0" prefWidth="323.0" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                         <ImageView fx:id="img6" fitHeight="80.0" fitWidth="80.0" layoutX="394.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                        <Label fx:id="tomorrowDescription1" layoutX="47.0" layoutY="40.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                        <Label fx:id="tomorrowDescription1" layoutX="47.0" layoutY="40.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
@@ -257,43 +325,43 @@
                                 </AnchorPane>
                                 <AnchorPane layoutY="95.0" prefHeight="80.0" prefWidth="498.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <Label fx:id="dayAfter1" layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+                                        <Label fx:id="dayAfter1" layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="323.0" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                         <ImageView fx:id="img7" fitHeight="80.0" fitWidth="80.0" layoutX="378.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                        <Label fx:id="dayAfterDescription1" layoutX="47.0" layoutY="33.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                        <Label fx:id="dayAfterDescription1" layoutX="47.0" layoutY="33.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane layoutY="257.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                <AnchorPane layoutY="255.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <Label fx:id="dayDayDayAfter1" layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+                                        <Label fx:id="dayDayDayAfter1" layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="323.0" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                         <ImageView fx:id="img9" fitHeight="80.0" fitWidth="80.0" layoutX="400.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                        <Label fx:id="dayDayDayAfterDescription1" layoutX="47.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                        <Label fx:id="dayDayDayAfterDescription1" layoutX="47.0" layoutY="22.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane layoutY="176.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                <AnchorPane layoutY="175.0" prefHeight="80.0" prefWidth="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <Label fx:id="dayDayAfter1" layoutX="47.0" layoutY="8.0" prefHeight="34.0" prefWidth="323.0" style="-fx-text-fill: black;" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
+                                        <Label fx:id="dayDayAfter1" layoutX="47.0" layoutY="8.0" prefHeight="34.0" prefWidth="323.0" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>
                                         </Label>
                                         <ImageView fx:id="img8" fitHeight="80.0" fitWidth="80.0" layoutX="356.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" />
-                                        <Label fx:id="dayDayAfterDescription1" layoutX="47.0" layoutY="25.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                        <Label fx:id="dayDayAfterDescription1" layoutX="47.0" layoutY="25.0" prefHeight="46.0" prefWidth="323.0" styleClass="description" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="3.6000000000000014" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="30.0">
                                             <font>
                                                 <Font name="Lato Black" size="16.0" />
                                             </font>

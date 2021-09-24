@@ -3,17 +3,17 @@ package pl.agatarachanska.model;
 import java.util.Date;
 
 public class Forecast {
-    public String temperatura;
+    public String temperature;
     public String symbol;
     public String description;
     public String pressure;
     public Date time;
 
-    public Forecast(String temp, String symbols, String descript, Date clock, String pressures){
-        temperatura=temp;
+    public Forecast(String temp, String symbols, String description, Date clock, String pressures) {
+        temperature = temp;
         symbol = symbols;
-        description = descript;
-        time= clock;
+        this.description = description;
+        time = clock;
         pressure = pressures;
     }
 }
