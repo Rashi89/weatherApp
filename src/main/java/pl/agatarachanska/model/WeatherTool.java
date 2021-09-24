@@ -82,7 +82,6 @@ public class WeatherTool {
     }
 
     public void weatherInTheSelectedCity() {
-        downloadDataFromApi();
         String api = "http://api.openweathermap.org/data/2.5/forecast?q=" + URLEncoder.encode(city, StandardCharsets.UTF_8) +
                 "&units=metric&mode=xml&lang=" + language + "&appid=a539a1d5b32e2518dfe9ca8abf12434c";
 
@@ -139,7 +138,7 @@ public class WeatherTool {
         } catch (NullPointerException e) {
             this.unexpectError = true;
         }
-        setTheWeatherAndForecastFor4Days();
+        setTheWeatherAndForecastFor4Days(forecast, forecasts);
     }
 
     private void readDataFromXML(XMLStreamReader reader) throws XMLStreamException {
@@ -178,7 +177,7 @@ public class WeatherTool {
         }
     }
 
-    private void setTheWeatherAndForecastFor4Days() {
+    private void setTheWeatherAndForecastFor4Days(List<String> forecast,List<Forecast> forecasts) {
         if (forecast.isEmpty()) {
             forecast.add("0");
             forecasts.add(new Forecast(temp, sym, descript, clock, press));

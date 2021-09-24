@@ -126,9 +126,11 @@ public class Weather implements Initializable {
         city.setStyle("-fx-text-fill: white");
         if (cityName.getText().equals("")) {
             showInfo(resourceBundle.getString("blankCityName"));
-        } else if (!gaveANumber(cityName.getText())) {
+        }
+        else if (!gaveANumber(cityName.getText())) {
             showInfo(resourceBundle.getString("noNumber"));
-        } else if (gaveANumber(cityName.getText())) {
+        }
+        else if (gaveANumber(cityName.getText())) {
             try {
                 city.setStyle("-fx-text-fill: white");
                 this.citySet = cityName.getText().trim();
